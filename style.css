@@ -1,0 +1,75 @@
+h1 {
+    color: red;
+}
+
+p {
+    color: purple;
+    padding: 10px;
+}
+
+body{
+    background-color: gray;
+
+    
+
+}
+
+.ust-bosluk {
+    margin-top: 20px;
+}
+
+.ortalanmis-yazi {
+    text-align: center;
+}
+
+.myDiv {
+  border: 5px outset red;
+  background-color: lightgray;
+  text-align: center;
+}
+
+.ortali-buton {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100px; 
+    height: 100px; 
+    padding: 0; 
+    background: gray;
+    color: brown;
+    border-color:aquamarine;
+    background-size: cover; 
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    transition: transform 0.1s ease-out; 
+    transform: scale(1);
+
+}
+
+.ortali-buton:active {
+    transform: scale(0.95); 
+}
+
+.buton-ikonu {
+  width: 100px;
+  height: 100px;
+}
+
+.thecat:hover {
+    opacity: 0.8;
+}
+
+.vomit {
+    color: brown;
+    background: rgb(0, 255, 72);
+    border-color: aquamarine;
+    height: 30px;
+    text-align: center;
+}
+
+.paragraph {
+    text-align: center;
+}
+
