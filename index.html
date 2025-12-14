@@ -1,24 +1,34 @@
-<script src="app.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="cookie.png"> 
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="eVkbBP50Xwcaea0AJfwzyoo9X7i5XfVZaIBYSKGSZPU" />
-    <link rel="stylesheet" href="style.css">
+    <title>Cookie Clicker</title>
     <meta name="description" content="Hello, I am Atlas! This is my website with a cookie clicker I wrote myself. Come and try it—it’s safe and fun!">
+    <link rel="icon" type="image/png" href="cookie.png">
+    <link rel="stylesheet" href="style.css">
+    <meta name="google-site-verification" content="eVkbBP50Xwcaea0AJfwzyoo9X7i5XfVZaIBYSKGSZPU">
+    <script src="app.js" defer></script>
 </head>
+<body>
+    <div class="myDiv">
+        <h1>I am Atlas</h1>
+        <p id="selam" class="ust-bosluk ortalanmis-yazi">
+            Hello. Welcome to my website. I kiss you. Start clicking the cookie!
+        </p>
+    </div>
 
-<title>Cookie Clicker</title>
+    <div>
+        <button onclick="d()" id="resimliButon" class="ortali-buton">
+            <img src="cookie.png" alt="Ayarlar İkonu" class="buton-ikonu">
+        </button>
+    </div>
 
-<div class="myDiv">
-    <h1>I am Atlas</h1>
-<p id="selam" class="ust-bosluk" class="ortalanmis-yazi">Hello. Welcome to my website. I kiss you. Start clicking the cookie!</p>
-</div>
-<div>
-    <button onclick="d()"  id="resimliButon" class="ortali-buton">
-  <img src="cookie.png" alt="Ayarlar İkonu" class="buton-ikonu">
-</button>
-</div>
+    <button class="vomit" onclick="p()">Reset the cookies!!</button>
 
-<button class="vomit"  onclick="p()">Reset the cookies!!</button>
+    <p class="paragraph">You clicked the cookie </p>
+    <p class="paragraph" id="demo"></p>
+    <p class="paragraph"> times!</p>
+</body>
+</html>
 
-<p class="paragraph">You clicked the cookie </p><p class="paragraph" id="demo"></p><p class="paragraph"> times!</p>
+
