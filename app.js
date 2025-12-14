@@ -18,5 +18,5 @@ function d() {
 function l() {
     document.getElemntById("demo").innerHTML
     =
-    x = x + Math.floor(Math.random() * 100) + 1;
+    x = x + Math.floor(Math.random() * 50) + 1;
 }
