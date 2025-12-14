@@ -1,5 +1,6 @@
 var x = 0
 
+console.log("Hello world!")
 const alan = document.getElementById("mesajAlani");
 alan.textContent = "Merhaba Dünya! JavaScript ile bu yazıyı ekledim.";
 
