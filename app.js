@@ -1,8 +1,7 @@
 var x = 0
 
-console.log("Hello world!")
+console.log("Hello, I am Atlas! I can't see you but nice to have a user in my website!")
 const alan = document.getElementById("mesajAlani");
-alan.textContent = "Merhaba Dünya! JavaScript ile bu yazıyı ekledim.";
 
 function p() {
     document.getElementById("demo").innerHTML
