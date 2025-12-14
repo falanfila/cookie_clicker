@@ -18,6 +18,7 @@ function d() {
 
 function l() {
     alert("Psst! There is an easter egg which can only be opened in a computer! A clue: try to open something from settings part. If you've found it, click the console!")
+    
     const eskiLog = console.log;
 
 // console.log'u override et
