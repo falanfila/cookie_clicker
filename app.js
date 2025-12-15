@@ -21,3 +21,7 @@ document.getElementById("eggButton").onclick = function () {
     x += 1000000;      // x artar (arka planda)
 };
 
+document.getElementById("randBtn").onclick = function () {
+    var randomIncrease = Math.floor(Math.random() * 50) + 1;
+    x += randomIncrease;
+};
