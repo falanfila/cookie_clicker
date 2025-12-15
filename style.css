@@ -76,3 +76,18 @@ body{
 .sade {
     background-color: gray;
 }
+
+#eggButton {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+
+    border: 1px solid #555;
+    border-radius: 6px;   /* köşeleri yumuşatır */
+    background: #fff;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
