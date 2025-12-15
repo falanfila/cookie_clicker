@@ -11,7 +11,7 @@ function p() {
 function d() {
     document.getElementById("demo").innerHTML
     =
-    x++;
+    x+= 1;
 }
 
 document.getElementById("eggButton").onclick = function () {
