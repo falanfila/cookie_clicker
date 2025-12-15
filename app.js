@@ -1,7 +1,5 @@
 var x = 0
-var easterEggActive = false;
 
-console.log("Congratulations! You've found the easter egg!")
 const alan = document.getElementById("mesajAlani");
 
 function p() {
@@ -14,4 +12,9 @@ function d() {
     document.getElementById("demo").innerHTML
     =
     x++;
+}
+
+function l(button) {
+    alert("Congratulations! You've found the easter egg! You've got +1.000.00 cookies!");
+    button.remove();
 }
