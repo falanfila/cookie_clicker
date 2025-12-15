@@ -1,4 +1,5 @@
 var x = 0
+var y = 0
 
 const alan = document.getElementById("mesajAlani");
 
@@ -22,5 +23,7 @@ document.getElementById("eggButton").onclick = function () {
 document.getElementById("randBtn").onclick = function () {
     var randomIncrease = Math.floor(Math.random() * 50) + 1;
     x += randomIncrease;
+    let y = randomIncrease
     document.getElementById("demo").innerHTML = x;
+    document.getElementById("randplus").innerHTML = y;
 };
