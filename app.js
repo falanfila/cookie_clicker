@@ -22,8 +22,7 @@ document.getElementById("eggButton").onclick = function () {
 };
 
 document.getElementById("randBtn").onclick = function () {
-    document.getElementById("demo").innerHTML
-    =
     var randomIncrease = Math.floor(Math.random() * 50) + 1;
     x += randomIncrease;
+    document.getElementById("demo").innerHTML = x;
 };
