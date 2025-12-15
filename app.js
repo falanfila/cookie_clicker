@@ -3,22 +3,20 @@ var x = 0
 const alan = document.getElementById("mesajAlani");
 
 function p() {
-    document.getElementById("demo").innerHTML
-    =
     x = 0;
+    document.getElementById("demo").innerHTML = x;
 }
 
 function d() {
-    document.getElementById("demo").innerHTML
-    =
     x+= 1;
+    document.getElementById("demo").innerHTML = x;
 }
 
 document.getElementById("eggButton").onclick = function () {
     alert("🎉 Easter Egg Found! Try to click the cookie");
-
     this.remove();     // buton yok olur
-    x += 1000000;      // x artar (arka planda)
+    x += 1000000;// x artar (arka planda)
+    document.getElementById("demo").innerHTML = x;
 };
 
 document.getElementById("randBtn").onclick = function () {
