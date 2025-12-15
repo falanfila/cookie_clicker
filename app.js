@@ -15,7 +15,7 @@ function d() {
 }
 
 document.getElementById("eggButton").onclick = function () {
-    alert("🎉 Easter Egg Found!");
+    alert("🎉 Easter Egg Found! Try to click the cookie");
 
     this.remove();     // buton yok olur
     x += 1000000;      // x artar (arka planda)
