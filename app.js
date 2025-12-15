@@ -13,9 +13,3 @@ function d() {
     =
     x++;
 }
-
-function l(button) {
-    alert("Congratulations! You've found the easter egg! You've got +1.000.00 cookies!");
-    button.remove();
-    x + x = 1000000;
-}
