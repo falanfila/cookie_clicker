@@ -28,6 +28,6 @@ document.getElementById("randBtn").onclick = function () {
     document.getElementById("randplus").innerHTML = y;
 };
 
-if (y = 1) {
+if (y < 2) {
     alert("How unlucky you are! Here's a reward for solace!");
 }
