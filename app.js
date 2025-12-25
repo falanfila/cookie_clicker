@@ -13,7 +13,7 @@ function d() {
     document.getElementById("demo").innerHTML = x;
 }
 
-function um() {
+function u() {
     alert("This is the user manual. The chocolate cookie gives you 1 cookie. The fortune cookie gives you random amount of cookies between 1 and 50. Also, there's an easter egg. You'll get your reward if you find it")
 
 document.getElementById("eggButton").onclick = function () {
