@@ -91,3 +91,9 @@ body{
 .center {
     text-align: center;
 }
+
+.user_manual {
+    background: cyan;
+    border-radius: 6px;
+    border: 3px;
+}
