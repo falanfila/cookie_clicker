@@ -1,3 +1,9 @@
 body {
   color: gray
 }
+
+.myDiv {
+  border: 5px outset red;
+  background-color: lightgray;
+  text-align: center;
+}
