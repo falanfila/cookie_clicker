@@ -8,6 +8,10 @@ body {
   text-align: center;
 }
 
+p {
+  color: black;
+}
+
 .kuki {
   height: 200px;
   width: 200px;
