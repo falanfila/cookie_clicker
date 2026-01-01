@@ -23,8 +23,8 @@ function u() {
     
 document.getElementById("eggButton").onclick = function () {
     alert("🎉 Easter Egg Found! Here's your reward!");
-    this.remove();     // buton yok olur
-    x += 1000000;// x artar (arka planda)
+    this.remove();
+    x += 1000000;
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
 };
