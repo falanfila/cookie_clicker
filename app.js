@@ -1,6 +1,9 @@
 var x = 0
 var y = 0
 
+x = Number(localStorage.getItem("cookieScore")) || 0;
+document.getElementById("demo").innerHTML = x;
+
 const alan = document.getElementById("mesajAlani");
 
 function p() {
