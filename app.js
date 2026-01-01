@@ -45,10 +45,8 @@ function temayiDegistir() {
     const body = document.body;
     const buton = document.getElementById("temaButon");
     
-    // Klasik geçiş
     body.classList.toggle("dark-mode");
 
-    // Buton metnini güncelleme
     if (body.classList.contains("dark-mode")) {
         buton.innerHTML = "☀️ Light Mode";
     } else {
