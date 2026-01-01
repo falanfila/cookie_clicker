@@ -2,6 +2,11 @@ h1 {
     color: red;
 }
 
+#randBtn {
+    /* Diğer ayarların kalsın, sadece background'u buna çevir */
+    background: var(--cookie-buton-bg) !important; 
+}
+
 /* Varsayılan Aydınlık Mod */
 :root {
   --arka-plan: #ffffff;
