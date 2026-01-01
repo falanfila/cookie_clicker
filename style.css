@@ -2,16 +2,23 @@ h1 {
     color: red;
 }
 
-p {
-    color: purple;
-    padding: 10px;
+/* Varsayılan Aydınlık Mod */
+:root {
+  --arka-plan: #ffffff;
+  --yazi-rengi: #333333;
 }
 
-body{
-    background-color: gray;
+/* Karanlık Mod Renkleri */
+.dark-mode {
+  --arka-plan: #1a1a1a;
+  --yazi-rengi: #f0f0f0;
+}
 
-    
-
+/* Sayfadaki öğelere bu değişkenleri ata */
+body {
+  background-color: var(--arka-plan);
+  color: var(--yazi-rengi);
+  transition: 0.3s; /* Renk geçişi yumuşak olsun diye */
 }
 
 .ust-bosluk {
@@ -73,7 +80,7 @@ body{
 }
 
 .sade {
-    background-color: gray;
+    background-color: #ffffff;
 }
 
 #eggButton {
