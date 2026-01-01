@@ -6,12 +6,14 @@ h1 {
 :root {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
+  --cookie-buton-bg: #e0e0e0;
 }
 
 /* Karanlık Mod Renkleri */
 .dark-mode {
   --arka-plan: #1a1a1a;
   --yazi-rengi: #f0f0f0;
+  --cookie-buton-bg: #e0e0e0;
 }
 
 /* Sayfadaki öğelere bu değişkenleri ata */
@@ -42,7 +44,7 @@ body {
     width: 100px; 
     height: 100px; 
     padding: 0; 
-    background: gray;
+    background: var(--cookie-buton-bg);
     color: brown;
     background-size: cover; 
     border: none;
