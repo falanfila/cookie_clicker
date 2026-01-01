@@ -7,6 +7,7 @@ h1 {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
   --cookie-buton-bg: #ffffff;
+  --kutu-rengi: lightgray;
 }
 
 /* Karanlık Mod Renkleri */
@@ -14,6 +15,7 @@ h1 {
   --arka-plan: #1a1a1a;
   --yazi-rengi: #f0f0f0;
   --cookie-buton-bg: #1a1a1a;
+  --kutu-rengi: 333333;
 }
 
 /* Sayfadaki öğelere bu değişkenleri ata */
@@ -33,7 +35,7 @@ body {
 
 .myDiv {
   border: 5px outset red;
-  background-color: lightgray;
+  background-color: var(--kutu-rengi);
   text-align: center;
 }
 
