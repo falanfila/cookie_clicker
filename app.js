@@ -14,6 +14,7 @@ function p() {
 function d() {
     x+= 1;
     document.getElementById("demo").innerHTML = x;
+    localStorage.setItem("cookieScore", x);
 }
 
 function u() {
@@ -25,6 +26,7 @@ document.getElementById("eggButton").onclick = function () {
     this.remove();     // buton yok olur
     x += 1000000;// x artar (arka planda)
     document.getElementById("demo").innerHTML = x;
+    localStorage.setItem("cookieScore", x);
 };
 
 document.getElementById("randBtn").onclick = function () {
@@ -33,6 +35,7 @@ document.getElementById("randBtn").onclick = function () {
     let y = randomIncrease
     document.getElementById("demo").innerHTML = x;
     document.getElementById("randplus").innerHTML = y;
+    localStorage.setItem("cookieScore", x);
 };
 
 if (y === 1) {
