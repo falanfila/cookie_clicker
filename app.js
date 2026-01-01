@@ -35,3 +35,18 @@ document.getElementById("randBtn").onclick = function () {
 if (y === 1) {
     alert("How unlucky you are! Here's a reward for solace!");
 }
+
+function temayiDegistir() {
+    const body = document.body;
+    const buton = document.getElementById("temaButon");
+    
+    // Klasik geçiş
+    body.classList.toggle("dark-mode");
+
+    // Buton metnini güncelleme
+    if (body.classList.contains("dark-mode")) {
+        buton.innerHTML = "☀️ Light Mode";
+    } else {
+        buton.innerHTML = "🌙 Dark Mode";
+    }
+}
