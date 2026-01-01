@@ -58,6 +58,12 @@ body {
 
 }
 
+ortali-buton:hover {
+    filter: brightness(1.1); /* Üzerine gelince biraz parlar */
+    transform: scale(1.05);  /* Çok hafif büyür */
+    transition: 0.2s;
+}
+
 .ortali-buton:active {
     transform: scale(0.95); 
 }
