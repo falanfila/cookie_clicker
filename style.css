@@ -45,7 +45,7 @@ body {
     align-items: center; 
     width: 100px; 
     height: 100px; 
-    padding: 0; 
+    padding: 10px; 
     background: var(--cookie-buton-bg);
     color: brown;
     background-size: cover; 
