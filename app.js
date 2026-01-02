@@ -8,6 +8,7 @@ const alan = document.getElementById("mesajAlani");
 
 function p() {
     x = 0;
+    y = 0;
     document.getElementById("demo").innerHTML = x;
 }
 
