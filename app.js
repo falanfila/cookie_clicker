@@ -19,7 +19,7 @@ function d() {
 }
 
 function u() {
-    alert("This is the user manual. The chocolate cookie gives you 1 cookie. The fortune cookie gives you random amount of cookies between 1 and 50. Also, there's an easter egg. You'll get your reward if you find it")
+    alert("This is the user manual. The chocolate cookie gives you 1 cookie. The fortune cookie gives you random amount of cookies between 1 and 50. You have ranks depending on your cookie amount. Good luck!")
 }
     
 document.getElementById("eggButton").onclick = function () {
@@ -41,6 +41,45 @@ document.getElementById("randBtn").onclick = function () {
     }
     localStorage.setItem("cookieScore", x);
 };
+
+function unvanKontrol() {
+    let yeniUnvan = "";
+    let yazielementi = document.getElementById("unvan-yazisi");
+
+    // Random puan geldiği için aralıkları büyüttük
+    if (x < 1000) {
+        yeniUnvan = "Baker apprentice";
+    } else if (x < 10000) {
+        yeniUnvan = "Cookie master";
+    } else if (x < 50000) {
+        yeniUnvan = "Factory manager";
+    } else if (x < 250000) {
+        yeniUnvan = "Cookie billionaire";
+    } else if (x < 1000000) {
+        yeniUnvan = "Cookie emperor";
+    } else {
+        yeniUnvan = "Cookie God";
+    }
+
+    // Unvan değiştiğinde görsel bildirim ver
+    if (yazielementi.innerText !== yeniUnvan) {
+        yazielementi.innerText = yeniUnvan;
+        unvanDegistiEfekti(); // Aşağıdaki görsel efekti çağırır
+    }
+}
+
+function unvanDegistiEfekti() {
+    // Tarayıcı başlığını güncelle (M4 Mac'teki sekmede görünür)
+    document.title = "NEW RANK!";
+    
+    // 2 saniye sonra başlığı eski haline getir
+    setTimeout(() => {
+        document.title = "Cookie Clicker";
+    }, 2000);
+
+    // İstersen burada bir alert verebilirsin (ama oyun akışını böler)
+    // Onun yerine ekranda bir konfeti patlatmak çok daha profesyonel olur!
+}
 
 function temayiDegistir() {
     const body = document.body;
