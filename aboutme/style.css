@@ -2,6 +2,22 @@ body {
   color: gray
 }
 
+:root {
+  --arka-plan: #ffffff;
+  --yazi-rengi: #333333;
+  --cookie-buton-bg: #ffffff;
+  --kutu-rengi: lightgray;
+}
+
+/* Karanlık Mod Renkleri */
+.dark-mode {
+  --arka-plan: #1a1a1a;
+  --yazi-rengi: #f0f0f0;
+  --cookie-buton-bg: #1a1a1a;
+  --kutu-rengi: #333333;
+}
+
+
 .myDiv {
   border: 5px outset red;
   background-color: lightgray;
