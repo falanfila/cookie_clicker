@@ -10,14 +10,20 @@ rutbeKontrol();
 const alan = document.getElementById("mesajAlani");
 
 function rutbeKontrol() {
-    if (x >= 0 && x < 170) {
+    if (x >= 0 && x < 700) {
         z = "Baker Apprentice";
-    } else if (x >= 170 && x < 350) {
+    } else if (x >= 700 && x < 1500) {
         z = "Baker";
-    } else if (x >= 350 && x < 600) {
+    } else if (x >= 1500 && x < 3000) {
         z = "Cookie Fabricator";
-    } else if (x >= 600) {
+    } else if (x >= 3000 && x < 5000) {
         z = "Master Chef";
+    } else if (x >= 5000 && x < 10000) {
+        z = "Cookie Millionaire";
+    } else if (x >= 10000 && x < 20000) {
+        z = "Cookie Emperor";
+    } else if (x >= 20000) {
+        z = "Cookie God";
     }
     document.getElementById("degree").innerHTML = z;
 }
