@@ -1,5 +1,6 @@
 var x = 0
 var y = 0
+var z = "Baker Apprentice"
 
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
@@ -48,13 +49,15 @@ function temayiDegistir() {
 }
 
 if (x >= 0 && x < 170) {
-    document.getElementById.innerHTML = 'Baker Apprentice'
+    document.getElementById.innerHTML = z
 }
 
 if (x >= 170 && x < 350) {
-    document.getElementById("degree").innerHTML = 'Baker'
+    var z = "Baker"
+    document.getElementById("degree").innerHTML = z
 }
 
 if (x >= 350 && x < 600) {
-    document.getElementById("degree").innerHTML = 'Cookie Fabricator'
+    var z = "Cookie Fabricator"
+    document.getElementById("degree").innerHTML = z
 }
