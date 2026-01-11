@@ -5,19 +5,35 @@ var z = "Baker Apprentice"
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
 document.getElementById("degree").innerHTML = z;
+rutbeKontrol();
 
 const alan = document.getElementById("mesajAlani");
+
+function rutbeKontrol() {
+    if (x >= 0 && x < 170) {
+        z = "Baker Apprentice";
+    } else if (x >= 170 && x < 350) {
+        z = "Baker";
+    } else if (x >= 350 && x < 600) {
+        z = "Cookie Fabricator";
+    } else if (x >= 600) {
+        z = "Master Chef";
+    }
+    document.getElementById("degree").innerHTML = z;
+}
 
 function p() {
     x = 0;
     y = 0;
     document.getElementById("demo").innerHTML = x;
+    rutbeKontrol();
 }
 
 function d() {
     x+= 1;
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
+    rutbeKontrol();
 }
 
 function u() {
@@ -34,6 +50,7 @@ document.getElementById("randBtn").onclick = function () {
     alert("How unlucky you are! Here's a reward for solace!");
     }
     localStorage.setItem("cookieScore", x);
+    rutbeKontrol();
 };
 
 function temayiDegistir() {
@@ -49,16 +66,3 @@ function temayiDegistir() {
     }
 }
 
-if (x >= 0 && x < 170) {
-    document.getElementById.innerHTML = z
-}
-
-if (x >= 170 && x < 350) {
-    var z = "Baker"
-    document.getElementById("degree").innerHTML = z
-}
-
-if (x >= 350 && x < 600) {
-    var z = "Cookie Fabricator"
-    document.getElementById("degree").innerHTML = z
-}
