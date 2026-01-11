@@ -4,6 +4,7 @@ var z = "Baker Apprentice"
 
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
+document.getElementById("degree").innerHTML = z;
 
 const alan = document.getElementById("mesajAlani");
 
