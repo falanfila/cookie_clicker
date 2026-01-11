@@ -26,6 +26,7 @@ function p() {
     x = 0;
     y = 0;
     document.getElementById("demo").innerHTML = x;
+    localStorage.setItem("cookieScore", x);
     rutbeKontrol();
 }
 
