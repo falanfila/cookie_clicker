@@ -47,10 +47,14 @@ function temayiDegistir() {
     }
 }
 
-if (x = 0) {
+if (x >= 0 && x < 170) {
     document.getElementById.innerHTML = 'Baker Apprentice'
 }
 
-if (x = 170) {
+if (x >= 170 && x < 350) {
     document.getElementById("degree").innerHTML = 'Baker'
+}
+
+if (x >= 350 && x < 600) {
+    document.getElementById("degree").innerHTML = 'Cookie Fabricator'
 }
