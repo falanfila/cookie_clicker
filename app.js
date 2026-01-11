@@ -46,3 +46,11 @@ function temayiDegistir() {
         buton.innerHTML = "🌙 Dark Mode";
     }
 }
+
+if (x = 0) {
+    document.getElementById.innerHTML = 'Baker Apprentice'
+}
+
+if (x = 170) {
+    document.getElementById("degree").innerHTML = 'Baker'
+}
