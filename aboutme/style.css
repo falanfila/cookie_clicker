@@ -49,3 +49,9 @@ p {
 .black {
   color: black;
 }
+
+.original_page {
+  color: black;
+  background-color: green;
+  border-color: red;
+}
