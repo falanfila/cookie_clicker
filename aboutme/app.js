@@ -1,4 +1,4 @@
-onst form = document.getElementById("contact-form");
+const form = document.getElementById("contact-form");
   const status = document.getElementById("form-status");
 
   form.onsubmit = async (e) => {
