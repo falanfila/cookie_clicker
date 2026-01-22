@@ -2,26 +2,6 @@ body {
   color: gray
 }
 
-.cookie-button {
-    background-image: url('cookie.png');
-    background-color: transparent;
-    
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-    
-    border: none;
-    text-decoration: none;
-    outline: none;
-    
-    transition: transform 0.1s;
-    cursor: pointer;
-}
-
 :root {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
