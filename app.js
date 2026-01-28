@@ -14,16 +14,22 @@ function rutbeKontrol() {
         z = "Baker Apprentice";
     } else if (x >= 700 && x < 1500) {
         z = "Baker";
+        alert("A new degree!")
     } else if (x >= 1500 && x < 3000) {
         z = "Cookie Fabricator";
+        alert("A new degree!")
     } else if (x >= 3000 && x < 5000) {
         z = "Master Chef";
+        alert("A new degree!")
     } else if (x >= 5000 && x < 10000) {
         z = "Cookie Riche";
+        alert("A new degree!")
     } else if (x >= 10000 && x < 20000) {
         z = "Cookie Emperor";
+        alert("A new degree!")
     } else if (x >= 20000) {
         z = "Cookie God";
+        alert("A new degree!")
     }
     document.getElementById("degree").innerHTML = z;
 }
