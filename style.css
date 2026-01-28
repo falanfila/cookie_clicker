@@ -2,7 +2,14 @@ h1 {
     color: red;
 }
 
-/* Varsayılan Aydınlık Mod */
+.willbebutton {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    color: red;
+    text-decoration: none;
+}
+
 :root {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
