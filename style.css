@@ -48,6 +48,10 @@ body {
   text-align: center;
 }
 
+#temaButon {
+    padding: 10px 20px;
+}
+
 .ortali-buton {
     display: flex; 
     justify-content: center; 
