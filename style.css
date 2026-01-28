@@ -50,6 +50,7 @@ body {
 
 #temaButon {
     padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .ortali-buton {
@@ -95,6 +96,7 @@ body {
     background: rgb(0, 255, 72);
     border-color: aquamarine;
     padding: 10px 20px;
+    boredr-radius: 5px;
 }
 
 .paragraph {
