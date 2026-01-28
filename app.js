@@ -22,7 +22,7 @@ function rutbeKontrol() {
         z = "Master Chef";
         alert("A new degree!")
     } else if (x >= 5000 && x < 10000) {
-        z = "Cookie Riche";
+        z = "Cookie Rich";
         alert("A new degree!")
     } else if (x >= 10000 && x < 20000) {
         z = "Cookie Emperor";
