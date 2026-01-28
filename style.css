@@ -6,11 +6,11 @@ h1 {
     display: inline-block;
     width: 10px;
     height: 20px;
-    color: red;
+    color: white;
     text-decoration: none;
-    border: 2px solid #000000;
+    border: 2px solid #357ABD;
     border-radius: 5px;
-    background-color: #9598e6;
+    background-color: #4A90E2;
 }
 
 :root {
