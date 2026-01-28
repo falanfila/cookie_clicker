@@ -52,11 +52,10 @@ body {
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    width: 100px; 
-    height: 100px; 
-    padding: 50px; 
+    width: 120px; 
+    height: 120px; 
+    padding: 10px;
     background: var(--cookie-buton-bg);
-    color: brown;
     background-size: cover; 
     cursor: pointer;
     user-select: none;
@@ -79,8 +78,8 @@ body {
 }
 
 .buton-ikonu {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: auto;
 }
 
 .thecat:hover {
@@ -91,8 +90,7 @@ body {
     color: brown;
     background: rgb(0, 255, 72);
     border-color: aquamarine;
-    height: 30px;
-    text-align: center;
+    padding: 10px 20px;
 }
 
 .paragraph {
@@ -103,24 +101,6 @@ body {
     background-color: #ffffff;
 }
 
-#eggButton {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-
-    border: 1px solid #555;
-    border-radius: 6px;
-    background: gray;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.moreinfo {
-    color: red;
-    width: 40px;
-    height: 20px;
-}
-
 .center {
     text-align: center;
 }
@@ -128,4 +108,5 @@ body {
 .user_manual {
     background: cyan;
     border-radius: 6px;
+    padding: 10px 20px;
 }
