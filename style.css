@@ -8,6 +8,8 @@ h1 {
     height: 20px;
     color: red;
     text-decoration: none;
+    border: 2px dashed #9598e6;
+    border-radius: 5px;
 }
 
 :root {
