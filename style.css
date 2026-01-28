@@ -8,8 +8,9 @@ h1 {
     height: 20px;
     color: red;
     text-decoration: none;
-    border: 2px solid #9598e6;
+    border: 2px solid #000000;
     border-radius: 5px;
+    background-color: #9598e6;
 }
 
 :root {
