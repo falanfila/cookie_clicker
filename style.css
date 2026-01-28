@@ -110,3 +110,19 @@ body {
     border-radius: 6px;
     padding: 10px 20px;
 }
+
+.cookie-container {
+    display: flex;
+    justify-content: center; /* Yatayda ortalar */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.all-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px 0;          
+}
