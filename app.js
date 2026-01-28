@@ -19,7 +19,7 @@ function rutbeKontrol() {
     } else if (x >= 3000 && x < 5000) {
         z = "Master Chef";
     } else if (x >= 5000 && x < 10000) {
-        z = "Cookie Millionaire";
+        z = "Cookie Riche";
     } else if (x >= 10000 && x < 20000) {
         z = "Cookie Emperor";
     } else if (x >= 20000) {
