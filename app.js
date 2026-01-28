@@ -53,9 +53,6 @@ document.getElementById("randBtn").onclick = function () {
     let y = randomIncrease
     document.getElementById("demo").innerHTML = x;
     document.getElementById("randplus").innerHTML = y;
-    if (y === 1) {
-    alert("How unlucky you are! Here's a reward for solace!");
-    }
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
 };
