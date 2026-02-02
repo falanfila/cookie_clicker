@@ -10,12 +10,6 @@ body {
     flex: 1; /* Bu komut, footer'ı sayfanın en altına itmek için boşluğu doldurur */
 }
 
-.myDiv {
-  border: 5px outset red;
-  background-color: #424242
-  text-align: center;
-}
-
 :root {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
@@ -46,26 +40,4 @@ p {
   height: 200px;
   width: 200px;
   text-align: center;
-}
-
-.gmail {
-  color: red;
-}
-
-.outlook {
-  color: blue;
-}
-
-.yahoo {
-  color: purple;
-}
-
-.black {
-  color: black;
-}
-
-.original_page {
-  color: black;
-  background-color: green;
-  border-color: red;
 }
