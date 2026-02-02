@@ -2,6 +2,78 @@ h1 {
     color: red;
 }
 
+.site-footer {
+    background-color: #1a1a1a; /* Koyu gri/siyah profesyonel arka plan */
+    color: #ffffff;
+    padding: 50px 0 20px 0;
+    margin-top: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* İçerik Düzeni */
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Sütun Yapısı */
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.footer-column h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #007bff; /* Şık bir alt çizgi */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.footer-column p {
+    color: #bbbbbb;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Liste ve Linkler */
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column a {
+    color: #bbbbbb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease; 
+}
+
+/* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
+.footer-column a:hover {
+    color: #007bff; /* Sadece maviye döner */
+}
+
+/* En Alt Telif Hakkı Çizgisi */
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: 30px;
+    padding-top: 20px;
+    font-size: 0.85rem;
+    color: #777;
+}
+
 .willbebutton {
     display: inline-block;
     padding: 10px 20px;
