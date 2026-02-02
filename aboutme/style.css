@@ -2,6 +2,9 @@ body {
   color: gray
 }
 
+.myDiv {
+}
+
 :root {
   --arka-plan: #ffffff;
   --yazi-rengi: #333333;
