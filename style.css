@@ -73,7 +73,8 @@ h1 {
 }
 
 .special-size {
-    padding: 100px 100px;
+    width: 100px;
+    height: 100px;
 }
 
 .willbebutton {
