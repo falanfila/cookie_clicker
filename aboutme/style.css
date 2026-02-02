@@ -2,6 +2,18 @@ body {
   color: gray
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ekranın %100 yüksekliğini kullan demek */
+    margin: 0;
+}
+
+/* İşte sihirli dokunuş burası */
+.sayfa-icerigi {
+    flex: 1; /* Bu komut, footer'ı sayfanın en altına itmek için boşluğu doldurur */
+}
+
 .myDiv {
   border: 5px outset red;
   background-color: #424242
