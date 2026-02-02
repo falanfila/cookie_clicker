@@ -73,8 +73,12 @@ h1 {
 }
 
 .special-size {
-    padding: 50px 50px
+    padding: 50px 50px;
 }
+
+.another-special-size {
+    width: 100px;
+    height: 100px;
 
 .willbebutton {
     display: inline-block;
