@@ -1,8 +1,4 @@
 body {
-  color: gray
-}
-
-body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Ekranın %100 yüksekliğini kullan demek */
