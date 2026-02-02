@@ -3,6 +3,9 @@ body {
 }
 
 .myDiv {
+  border: 5px outset red;
+  background-color: #424242
+  text-align: center;
 }
 
 :root {
