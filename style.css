@@ -10,7 +10,6 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* İçerik Düzeni */
 .footer-container {
     display: flex;
     justify-content: space-around;
@@ -20,7 +19,7 @@ h1 {
     padding: 0 20px;
 }
 
-/* Sütun Yapısı */
+
 .footer-column {
     flex: 1;
     min-width: 200px;
@@ -64,7 +63,6 @@ h1 {
     color: #007bff; /* Sadece maviye döner */
 }
 
-/* En Alt Telif Hakkı Çizgisi */
 .footer-bottom {
     text-align: center;
     border-top: 1px solid #333;
@@ -72,6 +70,10 @@ h1 {
     padding-top: 20px;
     font-size: 0.85rem;
     color: #777;
+}
+
+.special-size {
+    padding: 50px 50px;
 }
 
 .willbebutton {
