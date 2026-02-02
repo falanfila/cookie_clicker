@@ -79,7 +79,8 @@ h1 {
 .another-special-size {
     width: 100px;
     height: 100px;
-
+}
+    
 .willbebutton {
     display: inline-block;
     padding: 10px 20px;
