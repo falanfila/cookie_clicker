@@ -10,7 +10,7 @@ body {
 }
 
 /* İşte sihirli dokunuş burası */
-.sayfa-icerigi {
+.page-harmony {
     flex: 1; /* Bu komut, footer'ı sayfanın en altına itmek için boşluğu doldurur */
 }
 
