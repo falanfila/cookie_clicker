@@ -1,3 +1,12 @@
+.list-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .column {
     flex: 1;
     min-width: 200px;
