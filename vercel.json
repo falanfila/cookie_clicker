@@ -10,6 +10,10 @@
     {
       "source": "/api/leaderboard",
       "destination": "main.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ]
 }
