@@ -1,6 +1,7 @@
 var x = 0
 var y = 0
 var z = "Baker Apprentice"
+let playerName = localStorage.getItem("playerName");
 
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
@@ -70,3 +71,26 @@ function temayiDegistir() {
     }
 }
 
+// Sayfa yüklendiğinde ismi kontrol et
+
+
+if (!playerName) {
+    playerName = prompt("Welcome! What is your name for the leaderboard?");
+    if (playerName) {
+        localStorage.setItem("playerName", playerName);
+    } else {
+        playerName = "Anonymous Baker"; // İsim yazmazsa bu görünsün
+    }
+}
+
+// Skoru kaydetme fonksiyonu (Bunu bir butona bağlayabilirsin veya otomatik yaptırabiliriz)
+async function sendScoreToLeaderboard() {
+    const currentScore = x; // Senin kurabiye sayın 'x' değişkenindeydi
+    const name = localStorage.getItem("playerName");
+
+    await fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, score: currentScore })
+    });
+}
