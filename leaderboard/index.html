@@ -2,39 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Leaderboard</title>
-    <link rel="stylesheet" href="leaderboard-style.css"> </head>
-<body>
-    <div class="leaderboard-container">
-        <h1>🏆 Global Top 10</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Cookies</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboardBody">
-                </tbody>
-        </table>
-        <a href="../index.html" class="back-link">Return to Baking</a>
-    </div>
+    <title>Global Leaderboard</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body style="background: #1a1a1a; color: white; text-align: center; font-family: sans-serif;">
+
+    <h1>🏆 Global Top 10</h1>
+    <table style="margin: 0 auto; width: 80%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid #007bff;">
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Cookies</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+            </tbody>
+    </table>
+    <br>
+    <a href="/" style="color: #007bff;">← Back to Game</a>
 
     <script>
-        // Sayfa açılır açılmaz skorları getir
         async function loadLeaderboard() {
-            const response = await fetch('/api/leaderboard');
-            const data = await response.json();
-            const tableBody = document.getElementById('leaderboardBody');
-            
-            tableBody.innerHTML = data.map((player, index) => `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${player.name}</td>
-                    <td>${player.score.toLocaleString()}</td>
-                </tr>
-            `).join('');
+            try {
+                const response = await fetch('/api/leaderboard');
+                const data = await response.json();
+                const tableBody = document.getElementById('leaderboardBody');
+                
+                tableBody.innerHTML = data.map((player, index) => `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${player.name}</td>
+                        <td>${player.score}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error("Tablo yüklenemedi:", err);
+            }
         }
         loadLeaderboard();
     </script>
