@@ -1,17 +1,42 @@
-<div class="leaderboard-section">
-    <h2 class="leaderboard-title">🏆 Global Leaderboard</h2>
-    <div class="table-wrapper">
-        <table id="leaderboardTable">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="leaderboard-style.css"> </head>
+<body>
+    <div class="leaderboard-container">
+        <h1>🏆 Global Top 10</h1>
+        <table>
             <thead>
                 <tr>
                     <th>Rank</th>
                     <th>Player</th>
-                    <th>Score</th>
+                    <th>Cookies</th>
                 </tr>
             </thead>
             <tbody id="leaderboardBody">
                 </tbody>
         </table>
-        <div id="loadingMessage">No scores saved yet...</div>
+        <a href="../index.html" class="back-link">Return to Baking</a>
     </div>
-</div>
+
+    <script>
+        // Sayfa açılır açılmaz skorları getir
+        async function loadLeaderboard() {
+            const response = await fetch('/api/leaderboard');
+            const data = await response.json();
+            const tableBody = document.getElementById('leaderboardBody');
+            
+            tableBody.innerHTML = data.map((player, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${player.name}</td>
+                    <td>${player.score.toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+        loadLeaderboard();
+    </script>
+</body>
+</html>
