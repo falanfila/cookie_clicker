@@ -4,6 +4,30 @@
     {
       "src": "main.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "leaderboard/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "leaderboard/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.png",
+      "use": "@vercel/static"
     }
   ],
   "rewrites": [
@@ -12,8 +36,12 @@
       "destination": "main.py"
     },
     {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "source": "/leaderboard",
+      "destination": "/leaderboard/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
     }
   ]
 }
