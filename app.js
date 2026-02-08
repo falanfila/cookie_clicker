@@ -4,42 +4,11 @@ var y = 0;
 var z = "Baker Apprentice";
 let playerName = localStorage.getItem("playerName");
 
-// Sayfa yüklendiğinde skoru ve rütbeyi getir
+// Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
-rutbeKontrol();
 
-// --- KULLANICI ADI KONTROLÜ ---
-// Eğer isim yoksa sor, varsa hatırla
-if (!playerName) {
-    playerName = prompt("Welcome! What is your name for the leaderboard?");
-    if (playerName) {
-        localStorage.setItem("playerName", playerName);
-    } else {
-        playerName = "Anonymous Baker";
-        localStorage.setItem("playerName", playerName);
-    }
-}
-
-// --- PYTHON LEADERBOARD BAĞLANTISI ---
-async function sendScoreToLeaderboard() {
-    const name = localStorage.getItem("playerName");
-    const currentScore = x;
-
-    try {
-        // Vercel üzerindeki Python API'sine veriyi gönderiyoruz
-        await fetch('/api/leaderboard', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name, score: currentScore })
-        });
-        console.log("Score updated on server!");
-    } catch (err) {
-        console.error("Leaderboard connection error:", err);
-    }
-}
-
-// --- RÜTBE SİSTEMİ ---
+// RÜTBE KONTROLÜ (Açılışta çalışması için)
 function rutbeKontrol() {
     if (x >= 0 && x < 700) {
         z = "Baker Apprentice";
@@ -58,24 +27,86 @@ function rutbeKontrol() {
     }
     document.getElementById("degree").innerHTML = z;
 }
+rutbeKontrol(); // İlk açılışta rütbeyi göster
 
-// --- BUTON FONKSİYONLARI ---
+// --- KULLANICI ADI SORGUSU ---
+if (!playerName) {
+    playerName = prompt("Welcome! What is your name for the leaderboard?");
+    if (playerName) {
+        localStorage.setItem("playerName", playerName);
+    } else {
+        playerName = "Anonymous Baker";
+        localStorage.setItem("playerName", playerName);
+    }
+}
 
-// Normal Kurabiye Tıklama
+// --- PYTHON LEADERBOARD GÖNDERİMİ ---
+async function sendScoreToLeaderboard() {
+    const name = localStorage.getItem("playerName");
+    const currentScore = x;
+
+    try {
+        await fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, score: currentScore })
+        });
+        console.log("Sunucuya gönderildi!");
+    } catch (err) {
+        console.error("Liderlik tablosu hatası:", err);
+    }
+}
+
+// --- ANA KOMUTLAR (TIKLAMA) ---
+
+// Normal Kurabiye (d fonksiyonu)
 function d() {
     x += 1;
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
 
-    // Her 10 tıkta bir sunucuya gönder (Sistemi yormamak için)
+    // Her 10 tıkta bir sessizce gönder
     if (x % 10 === 0) {
         sendScoreToLeaderboard();
     }
 }
 
-// Random Kurabiye Tıklama
+// Şans Kurabiyesi (Random)
 document.getElementById("randBtn").onclick = function () {
     var randomIncrease = Math.floor(Math.random() * 50) + 1;
     x += randomIncrease;
-    document
+    document.getElementById("demo").innerHTML = x;
+    document.getElementById("randplus").innerHTML = randomIncrease;
+    localStorage.setItem("cookieScore", x);
+    rutbeKontrol();
+    sendScoreToLeaderboard(); // Hemen gönder
+};
+
+// Resetleme
+function p() {
+    if(confirm("Do you want to reset everything?")) {
+        x = 0;
+        document.getElementById("demo").innerHTML = x;
+        localStorage.setItem("cookieScore", x);
+        rutbeKontrol();
+        sendScoreToLeaderboard();
+    }
+}
+
+// Manual
+function u() {
+    alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
+}
+
+// Karanlık Mod
+function temayiDegistir() {
+    const body = document.body;
+    const buton = document.getElementById("temaButon");
+    body.classList.toggle("dark-mode");
+    if (body.classList.contains("dark-mode")) {
+        buton.innerHTML = "☀️ Light Mode";
+    } else {
+        buton.innerHTML = "🌙 Dark Mode";
+    }
+}
