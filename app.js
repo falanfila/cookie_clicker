@@ -1,15 +1,45 @@
-var x = 0
-var y = 0
-var z = "Baker Apprentice"
+// --- DEĞİŞKENLER ---
+var x = 0;
+var y = 0;
+var z = "Baker Apprentice";
 let playerName = localStorage.getItem("playerName");
 
+// Sayfa yüklendiğinde skoru ve rütbeyi getir
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
-document.getElementById("degree").innerHTML = z;
 rutbeKontrol();
 
-const alan = document.getElementById("mesajAlani");
+// --- KULLANICI ADI KONTROLÜ ---
+// Eğer isim yoksa sor, varsa hatırla
+if (!playerName) {
+    playerName = prompt("Welcome! What is your name for the leaderboard?");
+    if (playerName) {
+        localStorage.setItem("playerName", playerName);
+    } else {
+        playerName = "Anonymous Baker";
+        localStorage.setItem("playerName", playerName);
+    }
+}
 
+// --- PYTHON LEADERBOARD BAĞLANTISI ---
+async function sendScoreToLeaderboard() {
+    const name = localStorage.getItem("playerName");
+    const currentScore = x;
+
+    try {
+        // Vercel üzerindeki Python API'sine veriyi gönderiyoruz
+        await fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, score: currentScore })
+        });
+        console.log("Score updated on server!");
+    } catch (err) {
+        console.error("Leaderboard connection error:", err);
+    }
+}
+
+// --- RÜTBE SİSTEMİ ---
 function rutbeKontrol() {
     if (x >= 0 && x < 700) {
         z = "Baker Apprentice";
@@ -29,68 +59,23 @@ function rutbeKontrol() {
     document.getElementById("degree").innerHTML = z;
 }
 
-function p() {
-    x = 0;
-    y = 0;
-    document.getElementById("demo").innerHTML = x;
-    localStorage.setItem("cookieScore", x);
-    rutbeKontrol();
-}
+// --- BUTON FONKSİYONLARI ---
 
+// Normal Kurabiye Tıklama
 function d() {
-    x+= 1;
+    x += 1;
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
+
+    // Her 10 tıkta bir sunucuya gönder (Sistemi yormamak için)
+    if (x % 10 === 0) {
+        sendScoreToLeaderboard();
+    }
 }
 
-function u() {
-    alert("This is the user manual. The chocolate cookie gives you 1 cookie. The fortune cookie gives you random amount of cookies between 1 and 50. You have ranks depending on your cookie amount. Good luck!")
-}
-
+// Random Kurabiye Tıklama
 document.getElementById("randBtn").onclick = function () {
     var randomIncrease = Math.floor(Math.random() * 50) + 1;
     x += randomIncrease;
-    let y = randomIncrease
-    document.getElementById("demo").innerHTML = x;
-    document.getElementById("randplus").innerHTML = y;
-    localStorage.setItem("cookieScore", x);
-    rutbeKontrol();
-};
-
-function temayiDegistir() {
-    const body = document.body;
-    const buton = document.getElementById("temaButon");
-    
-    body.classList.toggle("dark-mode");
-
-    if (body.classList.contains("dark-mode")) {
-        buton.innerHTML = "☀️ Light Mode";
-    } else {
-        buton.innerHTML = "🌙 Dark Mode";
-    }
-}
-
-// Sayfa yüklendiğinde ismi kontrol et
-
-
-if (!playerName) {
-    playerName = prompt("Welcome! What is your name for the leaderboard?");
-    if (playerName) {
-        localStorage.setItem("playerName", playerName);
-    } else {
-        playerName = "Anonymous Baker"; // İsim yazmazsa bu görünsün
-    }
-}
-
-// Skoru kaydetme fonksiyonu (Bunu bir butona bağlayabilirsin veya otomatik yaptırabiliriz)
-async function sendScoreToLeaderboard() {
-    const currentScore = x; // Senin kurabiye sayın 'x' değişkenindeydi
-    const name = localStorage.getItem("playerName");
-
-    await fetch('/api/leaderboard', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, score: currentScore })
-    });
-}
+    document
