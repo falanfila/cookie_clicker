@@ -1,0 +1,40 @@
+.leaderboard-section {
+    margin: 20px auto;
+    max-width: 600px;
+    background: #1a1a1a;
+    border-top: 3px solid #007bff; /* Footer ile uyumlu mavi çizgi */
+    border-radius: 8px;
+    padding: 20px;
+    color: white;
+    font-family: sans-serif;
+}
+
+.leaderboard-title {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    border-bottom: 1px solid #333;
+    padding: 10px;
+    color: #888;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #222;
+}
+
+#loadingMessage {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+    font-style: italic;
+}
