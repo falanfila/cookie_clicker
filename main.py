@@ -1,12 +1,16 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from upstash_redis import Redis
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Vercel'in otomatik eklediği bilgilerle Redis'e bağlanır
-redis = Redis.from_env()
+# Vercel'in projeye bağladığı gizli anahtarları otomatik okur
+try:
+    redis = Redis.from_env()
+except Exception as e:
+    print(f"Bağlantı Hatası: {e}")
 
 @app.route('/api/leaderboard', methods=['GET', 'POST'])
 def handle_leaderboard():
@@ -16,28 +20,28 @@ def handle_leaderboard():
             name = new_entry.get('name', 'Anonymous')
             score = int(new_entry.get('score', 0))
 
-            # Veritabanından mevcut listeyi çek
+            # Veriyi Redis'ten çek (yoksa boş liste)
             data = redis.get('leaderboard') or []
             
-            # Aynı isimde biri varsa eskisini sil, yenisini ekle
+            # Aynı isimli oyuncuyu güncelle
             data = [item for item in data if item['name'] != name]
             data.append({"name": name, "score": score})
             
-            # Skorları büyükten küçüğe sırala ve en iyi 10'u tut
+            # Sırala ve ilk 10'u tut
             data.sort(key=lambda x: x['score'], reverse=True)
-            final_data = data[:10]
+            data = data[:10]
             
-            # Veritabanına kalıcı olarak kaydet
-            redis.set('leaderboard', final_data)
-            
+            # Redis'e geri kaydet
+            redis.set('leaderboard', data)
             return jsonify({"status": "success"}), 200
 
-        # GET isteği: Skorları veritabanından getir
+        # Skorları getir
         leaderboard = redis.get('leaderboard') or []
         return jsonify(leaderboard)
         
     except Exception as e:
+        # Hata olursa konsola yazdır ki görebilelim
+        print(f"Sunucu Hatası: {e}")
         return jsonify({"error": str(e)}), 500
 
-# Vercel için gerekli
 app = app
