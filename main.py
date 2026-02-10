@@ -1,16 +1,15 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from upstash_redis import Redis
-import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Senin ekran görüntünden aldığım özel anahtarlar:
+# Senin 21:26'daki ekran görüntünden aldığım kesin bilgiler:
 URL = "https://pleased-stinkbug-52622.upstash.io"
-TOKEN = "Afa2AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI"
+TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI="
 
-# Redis'e doğrudan bu anahtarlarla bağlanıyoruz
+# Doğrudan bağlantı kuruyoruz
 redis = Redis(url=URL, token=TOKEN)
 
 @app.route('/api/leaderboard', methods=['GET', 'POST'])
@@ -21,22 +20,16 @@ def handle_leaderboard():
             name = new_entry.get('name', 'Adsız Oyuncu')
             score = int(new_entry.get('score', 0))
 
-            # Mevcut listeyi çek
+            # Veritabanına kaydet
             data = redis.get('leaderboard') or []
-            
-            # Eğer veri liste değilse (bazen Redis hata verebilir), temizle
             if not isinstance(data, list):
                 data = []
-
-            # Oyuncuyu güncelle veya ekle
+                
             data = [item for item in data if item.get('name') != name]
             data.append({"name": name, "score": score})
-            
-            # Sırala ve ilk 10'u al
             data.sort(key=lambda x: x.get('score', 0), reverse=True)
             data = data[:10]
             
-            # Redis'e kaydet
             redis.set('leaderboard', data)
             return jsonify({"status": "success"}), 200
 
@@ -44,11 +37,9 @@ def handle_leaderboard():
         leaderboard = redis.get('leaderboard') or []
         if not isinstance(leaderboard, list):
             leaderboard = []
-            
         return jsonify(leaderboard)
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Vercel'in dosyayı tanıması için
 app = app
