@@ -6,8 +6,14 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Vercel'in projeye yeni eklediği gizli anahtarları otomatik okur
-redis = Redis.from_env()
+# Vercel'in bazen şifreleri farklı isimlerle verdiğini kontrol eder
+# KV_ veya UPSTASH_ ile başlayan her iki ismi de deneriz
+try:
+    url = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
+    token = os.environ.get("UPSTASH_REDIS_REST_TOKEN") or os.environ.get("KV_REST_API_TOKEN")
+    redis = Redis(url=url, token=token)
+except Exception as e:
+    print(f"Baglanti Hatasi: {e}")
 
 @app.route('/api/leaderboard', methods=['GET', 'POST'])
 def handle_leaderboard():
