@@ -6,45 +6,42 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Vercel'in bazen şifreleri farklı isimlerle verdiğini kontrol eder
-# KV_ veya UPSTASH_ ile başlayan her iki ismi de deneriz
-try:
-    url = os.environ.get("UPSTASH_REDIS_REST_URL") or os.environ.get("KV_REST_API_URL")
-    token = os.environ.get("UPSTASH_REDIS_REST_TOKEN") or os.environ.get("KV_REST_API_TOKEN")
-    redis = Redis(url=url, token=token)
-except Exception as e:
-    print(f"Baglanti Hatasi: {e}")
+# Vercel'in atadığı gizli şifreleri bulur
+def get_redis_client():
+    # Vercel KV veya Upstash Redis isimlerinden hangisi varsa onu kullanır
+    url = os.environ.get("KV_REST_API_URL") or os.environ.get("UPSTASH_REDIS_REST_URL")
+    token = os.environ.get("KV_REST_API_TOKEN") or os.environ.get("UPSTASH_REDIS_REST_TOKEN")
+    
+    if url and token:
+        return Redis(url=url, token=token)
+    return None
+
+redis = get_redis_client()
 
 @app.route('/api/leaderboard', methods=['GET', 'POST'])
 def handle_leaderboard():
+    if not redis:
+        return jsonify({"error": "Veritabanı bağlantısı henüz hazır değil!"}), 500
+        
     try:
         if request.method == 'POST':
             new_entry = request.json
-            name = new_entry.get('name', 'Anonymous')
+            name = new_entry.get('name', 'Adsız Oyuncu')
             score = int(new_entry.get('score', 0))
 
-            # Redis'ten mevcut veriyi çek (yoksa boş liste)
             data = redis.get('leaderboard') or []
-            
-            # Aynı isimli oyuncuyu listeden çıkar (varsa güncellemiş oluyoruz)
             data = [item for item in data if item.get('name') != name]
             data.append({"name": name, "score": score})
             
-            # Skorları büyükten küçüğe sırala ve ilk 10'u tut
             data.sort(key=lambda x: x.get('score', 0), reverse=True)
             data = data[:10]
             
-            # Veriyi Redis'e geri kaydet
             redis.set('leaderboard', data)
             return jsonify({"status": "success"}), 200
 
-        # GET isteği: Skorları göster
         leaderboard = redis.get('leaderboard') or []
         return jsonify(leaderboard)
-        
     except Exception as e:
-        print(f"HATA: {e}")
         return jsonify({"error": str(e)}), 500
 
-# Vercel'in uygulamayı tanıması için
 app = app
