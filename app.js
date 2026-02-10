@@ -110,3 +110,41 @@ function temayiDegistir() {
         buton.innerHTML = "🌙 Dark Mode";
     }
 }
+
+// Upstash bilgilerini buraya doğrudan yazıyoruz
+const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
+const REDIS_TOKEN = "Afa2AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI";
+
+// Skor Kaydetme (Global)
+async function saveScoreGlobal(name, score) {
+    // Önce mevcut listeyi çek
+    const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
+        headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+    });
+    const result = await response.json();
+    let data = result.result ? JSON.parse(result.result) : [];
+
+    // Yeni skoru ekle/güncelle
+    data = data.filter(item => item.name !== name);
+    data.push({ name: name, score: parseInt(score) });
+    data.sort((a, b) => b.score - a.score);
+    data = data.slice(0, 10);
+
+    // Veritabanına geri gönder
+    await fetch(`${REDIS_URL}/set/leaderboard`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+        body: JSON.stringify(data)
+    });
+    
+    console.log("Skor başarıyla dünyaya yayıldı!");
+}
+
+// Skorları Getirme
+async function getLeaderboardGlobal() {
+    const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
+        headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+    });
+    const result = await response.json();
+    return result.result ? JSON.parse(result.result) : [];
+}
