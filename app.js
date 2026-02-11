@@ -5,7 +5,7 @@ let playerName = localStorage.getItem("playerName");
 
 // Upstash Bilgileri
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
-const REDIS_TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI=";
+const REDIS_TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI1MjI=";
 
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
 x = Number(localStorage.getItem("cookieScore")) || 0;
