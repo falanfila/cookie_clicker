@@ -33,32 +33,38 @@ if (!playerName) {
 
 // --- GLOBAL SKOR KAYDETME ---
 async function saveScoreGlobal() {
-    const name = localStorage.getItem("playerName");
-    const score = x;
+    const name = localStorage.getItem("playerName") || "Anonymous Baker";
+    const score = parseInt(x);
+
+    // KESİN URL VE TOKEN (Senin son attığın bilgilerle güncelledim)
+    const url = "https://pleased-stinkbug-52622.upstash.io";
+    const token = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI1MjI=";
 
     try {
-        const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
-            headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+        // 1. Veriyi çek (DİKKAT: Eğik tırnak kullandım!)
+        const getRes = await fetch(`${url}/get/leaderboard`, {
+            headers: { Authorization: `Bearer ${token}` }
         });
-        const result = await response.json();
-        let data = result.result ? JSON.parse(result.result) : [];
+        const getResult = await getRes.json();
+        let data = getResult.result ? JSON.parse(getResult.result) : [];
 
+        // 2. Listeyi güncelle
         data = data.filter(item => item.name !== name);
-        data.push({ name: name, score: parseInt(score) });
+        data.push({ name: name, score: score });
         data.sort((a, b) => b.score - a.score);
         data = data.slice(0, 10);
 
-        await fetch(`${REDIS_URL}/set/leaderboard`, {
+        // 3. Veriyi geri gönder
+        await fetch(`${url}/set/leaderboard`, {
             method: 'POST',
-            headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+            headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify(data)
         });
-        console.log("Global skor başarıyla kaydedildi!");
+        console.log("Skor başarıyla buluta uçtu! Arya artık görebilir.");
     } catch (err) {
-        console.error("Bağlantı hatası:", err);
+        console.error("Eyvah, bir şeyler ters gitti:", err);
     }
 }
-
 // --- TIKLAMA KOMUTLARI ---
 
 function d() { // Normal Kurabiye
