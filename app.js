@@ -108,3 +108,7 @@ function temayiDegistir() { // Dark Mode
         buton.innerHTML = "🌙 Dark Mode";
     }
 }
+
+window.onbeforeunload = function() {
+    saveScoreGlobal();
+};
