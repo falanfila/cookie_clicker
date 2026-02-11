@@ -32,8 +32,21 @@ if (!playerName) {
 }
 
 function cu() {
-    playerName = prompt("Hello again! Let's change that username!")
-    localStorage.setItem("playerName", playerName);
+    // Önce eski ismi bir kenara not alalım
+    let oldName = localStorage.getItem("playerName");
+    
+    let newName = prompt("Hello again! Let's change that username!");
+    
+    if (newName && newName !== oldName) {
+        // Yeni ismi kaydet
+        localStorage.setItem("playerName", newName);
+        playerName = newName; // Global değişkeni de güncelle
+        
+        // Şimdi veritabanından eski ismi sildirmek için skor gönderelim
+        // Fonksiyona eski ismi "temizle" diye gönderiyoruz
+        saveScoreGlobal(oldName); 
+        alert("Username changed to " + newName + "!");
+    }
 }
 
 // --- GLOBAL SKOR KAYDETME ---
