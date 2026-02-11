@@ -31,6 +31,11 @@ if (!playerName) {
     localStorage.setItem("playerName", playerName);
 }
 
+function cu() {
+    playerName = prompt("Hello again! Let's change that username!")
+    localStorage.setItem("playerName", playerName);
+}
+
 // --- GLOBAL SKOR KAYDETME ---
 async function saveScoreGlobal() {
     const name = localStorage.getItem("playerName") || "Anonymous Baker";
