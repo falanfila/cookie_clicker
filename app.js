@@ -3,7 +3,7 @@ var x = 0;
 var z = "Baker Apprentice";
 let playerName = localStorage.getItem("playerName");
 
-// Upstash Bilgileri
+// Upstash Bilgileri (20:29'da sıfırladığın en yeni anahtar)
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI1MjI=";
 
