@@ -50,37 +50,44 @@ function cu() {
 }
 
 // --- GLOBAL SKOR KAYDETME ---
-async function saveScoreGlobal() {
-    const name = localStorage.getItem("playerName") || "Anonymous Baker";
+async function saveScoreGlobal(nameToRemove = null) {
+    const currentName = localStorage.getItem("playerName") || "Anonymous Baker";
     const score = parseInt(x);
 
-    // KESİN URL VE TOKEN (Senin son attığın bilgilerle güncelledim)
-    const url = "https://pleased-stinkbug-52622.upstash.io";
-    const token = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
+    // Üstteki global değişkenleri kullanıyoruz (Kodun daha temiz olur)
+    const url = REDIS_URL;
+    const token = REDIS_TOKEN;
 
     try {
-        // 1. Veriyi çek (DİKKAT: Eğik tırnak kullandım!)
         const getRes = await fetch(`${url}/get/leaderboard`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         const getResult = await getRes.json();
         let data = getResult.result ? JSON.parse(getResult.result) : [];
 
-        // 2. Listeyi güncelle
-        data = data.filter(item => item.name !== name);
-        data.push({ name: name, score: score });
+        // --- DÜZELTME BURADA ---
+        // 1. Eğer bir isim değiştirildiyse (nameToRemove varsa), onu listeden at
+        if (nameToRemove) {
+            data = data.filter(item => item.name !== nameToRemove);
+        }
+        
+        // 2. Şu anki ismi zaten her zaman filtreliyoruz (puan güncellemesi için)
+        data = data.filter(item => item.name !== currentName);
+        
+        // 3. Yeni ismi ve puanı ekle
+        data.push({ name: currentName, score: score });
+        
         data.sort((a, b) => b.score - a.score);
         data = data.slice(0, 10);
 
-        // 3. Veriyi geri gönder
         await fetch(`${url}/set/leaderboard`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify(data)
         });
-        console.log("Skor başarıyla buluta uçtu! Arya artık görebilir.");
+        console.log("Skor tablosu güncellendi!");
     } catch (err) {
-        console.error("Eyvah, bir şeyler ters gitti:", err);
+        console.error("Hata:", err);
     }
 }
 // --- TIKLAMA KOMUTLARI ---
