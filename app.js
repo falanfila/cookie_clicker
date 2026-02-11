@@ -3,7 +3,7 @@ var x = 0;
 var z = "Baker Apprentice";
 let playerName = localStorage.getItem("playerName");
 
-// Upstash Bilgileri (Senin ekran görüntünden aldığım kesin anahtarlar)
+// Upstash Bilgileri
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI=";
 
@@ -31,32 +31,29 @@ if (!playerName) {
     localStorage.setItem("playerName", playerName);
 }
 
-// --- GLOBAL SKOR KAYDETME (ARADAKİ PYTHON'U SİLDİK) ---
+// --- GLOBAL SKOR KAYDETME ---
 async function saveScoreGlobal() {
     const name = localStorage.getItem("playerName");
     const score = x;
 
     try {
-        // 1. Mevcut listeyi veritabanından çek
         const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
             headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
         });
         const result = await response.json();
         let data = result.result ? JSON.parse(result.result) : [];
 
-        // 2. Listeyi güncelle
         data = data.filter(item => item.name !== name);
         data.push({ name: name, score: parseInt(score) });
         data.sort((a, b) => b.score - a.score);
         data = data.slice(0, 10);
 
-        // 3. Veritabanına geri gönder (Kalıcı kayıt)
         await fetch(`${REDIS_URL}/set/leaderboard`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
             body: JSON.stringify(data)
         });
-        console.log("Global skor başarıyla kaydedildi! Arya artık görebilir.");
+        console.log("Global skor başarıyla kaydedildi!");
     } catch (err) {
         console.error("Bağlantı hatası:", err);
     }
@@ -70,7 +67,6 @@ function d() { // Normal Kurabiye
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
 
-    // Her 10 tıkta bir buluta gönder
     if (x % 10 === 0) {
         saveScoreGlobal();
     }
@@ -83,7 +79,7 @@ document.getElementById("randBtn").onclick = function () { // Şans Kurabiyesi
     document.getElementById("randplus").innerHTML = randomIncrease;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
-    saveScoreGlobal(); // Hemen buluta gönder
+    saveScoreGlobal();
 };
 
 function p() { // Resetleme
@@ -96,4 +92,19 @@ function p() { // Resetleme
     }
 }
 
-// ... Diğer fonksiyonların (tema değiştir vb.) aynı kalabilir ...
+// --- KURTARILAN FONKSİYONLAR ---
+
+function u() { // Manual / Yardım
+    alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
+}
+
+function temayiDegistir() { // Dark Mode
+    const body = document.body;
+    const buton = document.getElementById("temaButon");
+    body.classList.toggle("dark-mode");
+    if (body.classList.contains("dark-mode")) {
+        buton.innerHTML = "☀️ Light Mode";
+    } else {
+        buton.innerHTML = "🌙 Dark Mode";
+    }
+}
