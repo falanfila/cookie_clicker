@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Global Leaderboard</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="../style.css"> 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
 </head>
 <body style="background: #1a1a1a; color: white; text-align: center; font-family: sans-serif;">
@@ -24,32 +24,43 @@
     <a href="/" style="color: #007bff;">← Back to Game</a>
 
     <script>
+        // Upstash Bilgileri (Oyun sayfasındakiyle aynı olmalı)
+        const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
+        const REDIS_TOKEN = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI=";
+
         async function loadLeaderboard() {
             try {
-                const response = await fetch('/api/leaderboard');
-                const data = await response.json();
+                // Veritabanından veriyi çek
+                const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
+                    headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+                });
+                const result = await response.json();
+                
+                // Gelen veri metin formatındaysa JSON'a çevir, yoksa boş liste yap
+                const data = result.result ? JSON.parse(result.result) : [];
+                
                 const tableBody = document.getElementById('leaderboardBody');
                 
+                if (data.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='3'>Henüz kimse kurabiye yapmamış!</td></tr>";
+                    return;
+                }
+
                 tableBody.innerHTML = data.map((player, index) => `
-                    <tr>
+                    <tr style="border-bottom: 1px solid #333; height: 40px;">
                         <td>${index + 1}</td>
-                        <td>${player.name}</td>
-                        <td>${player.score}</td>
+                        <td style="color: #007bff; font-weight: bold;">${player.name}</td>
+                        <td>${player.score.toLocaleString()}</td>
                     </tr>
                 `).join('');
             } catch (err) {
                 console.error("Tablo yüklenemedi:", err);
+                document.getElementById('leaderboardBody').innerHTML = "<tr><td colspan='3'>Veritabanı hatası!</td></tr>";
             }
         }
+
+        // Sayfa açılınca yükle
         loadLeaderboard();
-        async function updateLeaderboard() {
-    const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
-        headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
-    });
-    const result = await response.json();
-    const data = result.result ? JSON.parse(result.result) : [];
-    // Tabloyu ekrana basma kodun buraya gelecek...
-}
     </script>
 </body>
 </html>
