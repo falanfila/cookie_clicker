@@ -38,7 +38,7 @@ async function saveScoreGlobal() {
 
     // KESİN URL VE TOKEN (Senin son attığın bilgilerle güncelledim)
     const url = "https://pleased-stinkbug-52622.upstash.io";
-    const token = "Ac20AAIncDJhZmRhZGVkYzcyOTU0NmVjOThjZTc5OTlhNzFjZTYwZThhNTI2MjI1MjI=";
+    const token = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
 
     try {
         // 1. Veriyi çek (DİKKAT: Eğik tırnak kullandım!)
