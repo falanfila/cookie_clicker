@@ -42,6 +42,14 @@
             }
         }
         loadLeaderboard();
+        async function updateLeaderboard() {
+    const response = await fetch(`${REDIS_URL}/get/leaderboard`, {
+        headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
+    });
+    const result = await response.json();
+    const data = result.result ? JSON.parse(result.result) : [];
+    // Tabloyu ekrana basma kodun buraya gelecek...
+}
     </script>
 </body>
 </html>
