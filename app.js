@@ -104,7 +104,7 @@ function d() { // Normal Kurabiye
 }
 
 document.getElementById("randBtn").onclick = function () { // Şans Kurabiyesi
-    var randomIncrease = Math.floor(Math.random() * 50) + 1;
+    var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
     document.getElementById("demo").innerHTML = x;
     document.getElementById("randplus").innerHTML = randomIncrease;
