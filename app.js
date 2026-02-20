@@ -1,7 +1,10 @@
 // --- DEĞİŞKENLER ---
 var x = 0;
 var z = "Baker Apprentice";
+var y = localStorage.getItem('oldY')
 let playerName = localStorage.getItem("playerName");
+
+y = y ? Number(y) : 0;
 
 // Upstash Bilgileri (20:29'da sıfırladığın en yeni anahtar)
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
@@ -13,6 +16,11 @@ const intervalId = setInterval(() => {
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
+
+function uploadY(newY) {
+    y = newY;
+    localStorage.setItem('oldY', y);
+}
 
 function rutbeKontrol() {
     if (x >= 0 && x < 700) z = "Baker Apprentice";
