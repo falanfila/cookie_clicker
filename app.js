@@ -22,7 +22,7 @@ x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
 
 function buy1() {
-  if (x >= cost1 && x === cost1){
+  if (x >= cost1){
     x -= cost1
     uploadY(1)
     uploadcps()
