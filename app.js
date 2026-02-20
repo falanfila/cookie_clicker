@@ -27,6 +27,7 @@ function buy1() {
     x -= cost1
     uploadY(1)
     uploadcps()
+    document.getElementById("demo").innerHTML = x;
   } else {
         alert("Not enough cookies!");
     }
