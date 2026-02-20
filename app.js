@@ -2,6 +2,7 @@
 var x = 0;
 var z = "Baker Apprentice";
 var y = localStorage.getItem('oldY')
+let cost1 = 100
 let playerName = localStorage.getItem("playerName");
 
 y = y ? Number(y) : 0;
@@ -16,6 +17,11 @@ const intervalId = setInterval(() => {
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
+
+function buy() {
+  if (x >= cost1 && x === cost1){
+    x -= cost1
+    uploadY(1)
 
 function uploadY(newY) {
     y += newY;
