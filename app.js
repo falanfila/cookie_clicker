@@ -12,6 +12,7 @@ const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
 const intervalId = setInterval(() => {
   x += y
+  document.getElementById("demo").innerHTML = x
 }, 1000)
 
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
