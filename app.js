@@ -18,6 +18,7 @@ const intervalId = setInterval(() => {
 }, 1000)
 
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
+uploadcps()
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
 
