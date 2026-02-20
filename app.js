@@ -22,6 +22,8 @@ function buy() {
   if (x >= cost1 && x === cost1){
     x -= cost1
     uploadY(1)
+  }
+}
 
 function uploadY(newY) {
     y += newY;
