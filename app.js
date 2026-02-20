@@ -18,7 +18,7 @@ x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
 
 function uploadY(newY) {
-    y = newY;
+    y += newY;
     localStorage.setItem('oldY', y);
 }
 
