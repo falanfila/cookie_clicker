@@ -13,6 +13,8 @@ const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI
 const intervalId = setInterval(() => {
   x += y
   document.getElementById("demo").innerHTML = x
+  rutbeKontrol();
+  localStorage.setItem("cookieScore", x);
 }, 1000)
 
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
@@ -24,7 +26,9 @@ function buy1() {
     x -= cost1
     uploadY(1)
     uploadcps()
-  }
+  } else {
+        alert("Not enough cookies!");
+    }
 }
 
 function uploadY(newY) {
