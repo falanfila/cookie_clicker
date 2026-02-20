@@ -6,6 +6,9 @@ let playerName = localStorage.getItem("playerName");
 // Upstash Bilgileri (20:29'da sıfırladığın en yeni anahtar)
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
+const intervalId = setInterval(() => {
+  x += y
+}, 1000)
 
 // Sayfa yüklenir yüklenmez verileri çek ve ekrana bas
 x = Number(localStorage.getItem("cookieScore")) || 0;
@@ -107,7 +110,6 @@ document.getElementById("randBtn").onclick = function () { // Şans Kurabiyesi
     var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
     document.getElementById("demo").innerHTML = x;
-    document.getElementById("randplus").innerHTML = randomIncrease;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
     saveScoreGlobal();
