@@ -3,6 +3,7 @@ var z = "Baker Apprentice";
 var y = localStorage.getItem('oldY')
 let cost1 = 100
 let playerName = localStorage.getItem("playerName");
+let sound = document.getElementById("clickSound");
 
 y = y ? Number(y) : 0;
 
@@ -189,6 +190,7 @@ async function saveScoreGlobal(nameToRemove = null) {
 
 function d() { // Normal Cookie
     x += 1;
+  sound.play()
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
