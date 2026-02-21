@@ -31,6 +31,28 @@ function buy1() {
     }
 }
 
+function buy100() {
+  if (x >= 1000){
+    x -= 1000
+    uploadY(100)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy400() {
+  if (x >= 10000){
+    x -= 400
+    uploadY(400)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
 function uploadY(newY) {
     y += newY;
     localStorage.setItem('oldY', y);
