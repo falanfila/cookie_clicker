@@ -2,6 +2,11 @@ h1 {
     color: red;
 }
 
+.buyment {
+    background-color: #787576;
+    padding: 50px 0 20px 0;
+}
+
 .site-footer {
     background-color: #1a1a1a; /* Koyu gri/siyah profesyonel arka plan */
     color: #ffffff;
