@@ -44,8 +44,63 @@ function buy100() {
 
 function buy400() {
   if (x >= 10000){
-    x -= 400
+    x -= 10000
     uploadY(400)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy800() {
+  if (x >= 100000){
+    x -= 100000
+    uploadY(800)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy16000() {
+  if (x >= 1000000){
+    x -= 1000000
+    uploadY(16000)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy32000() {
+  if (x >= 10000000){
+    x -= 10000000
+    uploadY(32000)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy64000() {
+  if (x >= 100000000){
+    x -= 100000000
+    uploadY(64000)
+    uploadcps()
+    document.getElementById("demo").innerHTML = x;
+  } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function buy128000() {
+  if (x >= 1000000000){
+    x -= 1000000000
+    uploadY(128000)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
   } else {
