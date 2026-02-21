@@ -203,6 +203,7 @@ function d() { // Normal Cookie
 document.getElementById("randBtn").onclick = function () { // Fortune Cookie
     var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
+  sound.play()
     document.getElementById("demo").innerHTML = x;
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
