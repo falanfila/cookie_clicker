@@ -129,7 +129,7 @@ body {
 }
 
 .myDiv {
-  border: 5px outset red;
+  border: 5px outset #173cd1;
   background-color: var(--kutu-rengi);
   text-align: center;
 }
