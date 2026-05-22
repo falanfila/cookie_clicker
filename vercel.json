@@ -5,5 +5,9 @@
       "source": "/leaderboard",
       "destination": "/leaderboard/index.html"
     }
+  ],
+  "rewrites": [
+    { "source": "/topdown-claude", "destination": "/topdown-claude/index.html" },
+    { "source": "/topdown-claude/(.*)", "destination": "/topdown-claude/$1" }
   ]
 }
