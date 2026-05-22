@@ -310,7 +310,7 @@ function gameLoop(currentTime) {
             }
         }
 
-        if (gameState != PLAYING && wave === 1){
+        if (gameState === GAMEOVER && wave === 1){
             alert("Congratulations! You've found this easter egg by proving that you're a real noob - you've died in the first wave!")
         }
 
