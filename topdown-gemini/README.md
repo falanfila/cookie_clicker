@@ -24,10 +24,7 @@ Shooting is **automatic** — your character always targets the nearest enemy.
 ## File Structure
 
 ```
-brotato-game/
+topdown-game/
 ├── index.html    # HTML structure & markup
-├── style.css     # All styles
-├── game.js       # Game logic (canvas, enemies, bullets, shop)
-├── vercel.json   # Vercel config (caching, headers)
-└── README.md
+└── README.md 
 ```
