@@ -340,7 +340,7 @@ function gameLoop(currentTime) {
     } else if (gameState === "GAMEOVER") {
         if (wave === 1){
             alert("Congratulations! You've found this easter egg by proving that you're a real noob - you've died in the first wave!")
-            break
+            gameState = "NONE"
         }
         ctx.fillStyle = "rgba(10, 10, 10, 0.9)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
