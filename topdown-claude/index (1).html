@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brotato — Top-Down Survival</title>
+  <meta name="description" content="A Brotato-style top-down survival game. Survive waves of enemies and pick upgrades!" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="game-wrapper">
+    <canvas id="gc"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      <div class="hud-item">
+        ❤️
+        <div id="healthBar"><div id="healthFill"></div></div>
+        <span id="hpTxt">100</span>
+      </div>
+      <div class="hud-item">
+        ⭐
+        <div id="xpBar"><div id="xpFill"></div></div>
+        <span id="lvlTxt">Lv1</span>
+      </div>
+      <div class="hud-item">💀 <span id="killTxt">0</span></div>
+      <div class="hud-item">🌊 <span id="waveTxt">1</span></div>
+      <div class="hud-item">⏱ <span id="timerTxt">30</span></div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="overlay">
+      <h1>BROTATO</h1>
+      <p class="subtitle">TOP-DOWN SURVIVAL</p>
+      <p class="info">WASD / Arrow Keys → Move</p>
+      <p class="info">Auto-fire • Survive the waves</p>
+      <p class="info">Pick an upgrade after each wave!</p>
+      <button id="startBtn">PLAY ▶</button>
+    </div>
+
+    <!-- Shop Overlay -->
+    <div id="shopOverlay" class="hidden"></div>
+
+    <!-- Wave Announcement -->
+    <div id="waveAnn"></div>
+  </div>
+
+  <script src="./game.js"></script>
+</body>
+</html>
