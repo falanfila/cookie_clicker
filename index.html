@@ -1,93 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Cookie Clicker</title>
-    <meta name="description" content="Hello, I am Atlas! This is my website with a cookie clicker I wrote myself. Come and try it—it’s safe and fun!">
-    <link rel="icon" type="image/png" href="cookie.png">
-    <link rel="stylesheet" href="style.css">
-    <meta name="google-site-verification" content="eVkbBP50Xwcaea0AJfwzyoo9X7i5XfVZaIBYSKGSZPU">
-    <meta name="google-adsense-account" content="ca-pub-3128128533186970">
-    <audio id="clickSound" src="Bite3.wav"></audio>
-    <script src="app.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brotato — Top-Down Survival</title>
+  <meta name="description" content="A Brotato-style top-down survival game. Survive waves of enemies and pick upgrades!" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="myDiv">
-        <h1>I am Atlas</h1>
-        <p id="selam" class="ust-bosluk ortalanmis-yazi">
-            Hello. Welcome to my website. Please come here often. Start clicking the cookie!
-        </p>
+  <div id="game-wrapper">
+    <canvas id="gc"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      <div class="hud-item">
+        ❤️
+        <div id="healthBar"><div id="healthFill"></div></div>
+        <span id="hpTxt">100</span>
+      </div>
+      <div class="hud-item">
+        ⭐
+        <div id="xpBar"><div id="xpFill"></div></div>
+        <span id="lvlTxt">Lv1</span>
+      </div>
+      <div class="hud-item">💀 <span id="killTxt">0</span></div>
+      <div class="hud-item">🌊 <span id="waveTxt">1</span></div>
+      <div class="hud-item">⏱ <span id="timerTxt">30</span></div>
     </div>
 
-<div class="cookie-container">
-    <button onclick="d()" id="resimliButon" class="ortali-buton">
-        <img src="cookie.png" alt="Ayarlar İkonu" class="buton-ikonu">
-    </button>
-
-    <button id="randBtn" class="ortali-buton">
-        <img src="fortune_cookie.png" alt="Ayarlar İkonu" class="buton-ikonu">
-    </button>
-</div>
-
-<div class="all-buttons-container">
-    <button class="vomit" onclick="p()">Reset the cookies!!</button>
-    <button onclick="temayiDegistir()" id="temaButon">🌙 Dark Mode</button>
-    <button class="user_manual" onclick="u()">User Manual</button>
-    <button class="leaderboard">
-        <a href="https://atlas-yurdakurban.com/leaderboard">🏆 Global Leaderboard</a>
-    </button>
-    <button class="leaderboard" onclick="cu()">Change Username</button>
-</div>
-<div class="shop">
-    <button class="buyment" onclick="buy1()">Potato🥔    100</button>
-    <button class="buyment" onclick="buy100()">Worker👷    1,000</button>
-    <button class="buyment" onclick="buy400()">Farm🌾    10,000</button>
-    <button class="buyment" onclick="buy800()">Mine⛏️    100,000</button>
-    <button class="buyment" onclick="buy16000()">Factory🏭    600,000</button>
-    <button class="buyment" onclick="buy32000()">Bank🏦    1,000,000</button>
-    <button class="buyment" onclick="buy64000()">Temple🏛️    10,000,000</button>
-    <button class="buyment" onclick="buy128000()">Reactor🔋    100,000,000</button>
-</div>
- 
-    <p class="paragraph">You have </p>
-    <p class="paragraph" id="demo"></p>
-    <p class="paragraph"> cookies!</p>
-    <p class="center" id="cps"></p>
-    <p class="paragraph">cookies per second</p>
-    <p class="paragraph">Current degree: </p>
-    <p class="paragraph" id="degree"></p>
-    <footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-column special-size another-special-size">
-            <a href="https://atlas-yurdakurban.com" alt="Main Page" title="Main Page">
-                <img src="logo.png">
-            </a>
-        </div>
-        
-        <div class="footer-column">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="https://atlas-yurdakurban.com">Home</a></li>
-                <li><a href="https://atlas-yurdakurban.com/aboutme">About</a></li>
-                <li><a href="https://atlas-yurdakurban.com/projects">Projects</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Connect</h3>
-            <ul>
-                <li><a href="https://github.com/falanfila/cookie_clicker" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                <li><a href="https://atlas-yurdakurban.com/feedback">Contact</a></li>
-            </ul>
-        </div>
-
+    <!-- Start Screen -->
+    <div id="overlay">
+      <h1>BROTATO</h1>
+      <p class="subtitle">TOP-DOWN SURVIVAL</p>
+      <p class="info">WASD / Arrow Keys → Move</p>
+      <p class="info">Auto-fire • Survive the waves</p>
+      <p class="info">Pick an upgrade after each wave!</p>
+      <button id="startBtn">PLAY ▶</button>
     </div>
-    
-    <div class="footer-bottom">
-        <p>&copy; 2026 Atlas Yurdakurban. All rights reserved.</p>
-    </div>
-</footer>
+
+    <!-- Shop Overlay -->
+    <div id="shopOverlay" class="hidden"></div>
+
+    <!-- Wave Announcement -->
+    <div id="waveAnn"></div>
+  </div>
+
+  <script src="game.js"></script>
 </body>
 </html>
-
-
