@@ -2,6 +2,10 @@ h1 {
     color: red;
 }
 
+.leaderboard-none {
+    border: none;
+}
+
 .buyment {
     background-color: #787576;
     padding: 50px 0 20px 0;
