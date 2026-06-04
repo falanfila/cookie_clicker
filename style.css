@@ -154,10 +154,12 @@ body {
 }
 
 .myDiv {
-  border: 5px outset #173cd1;
-  background-color: var(--kutu-rengi);
-  transition: 0.3s;
-  text-align: center;
+    position: relative;
+    left: 20px;
+    right: 20px;
+    border: 5px outset #173cd1;
+    background-color: var(--kutu-rengi);
+    transition: 0.3s;
 }
 
 #temaButon {
