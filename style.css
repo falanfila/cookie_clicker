@@ -7,6 +7,12 @@ h1 {
     background-color: var(--arka-plan);
 }
 
+.darkmode-button {
+    background-color: var(--background-color) !important;
+    color: var(--color) !important;
+    border-color: var(--border-color) !important;
+}
+
 .buyment {
     background-color: #787576;
     padding: 50px 0 20px 0;
@@ -116,6 +122,18 @@ h1 {
   --yazi-rengi: #f0f0f0;
   --cookie-buton-bg: #1a1a1a;
   --kutu-rengi: #333333;
+}
+
+.dark-button {
+    --background-color: #f8f9fa;
+    --color: #212529;
+    --border-color: #f8f9fa;
+}
+
+.light-button {
+    --background-color: #212529; /* btn-dark rengi */
+    --color: #fff;
+    --border-color: #212529;
 }
 
 /* Sayfadaki öğelere bu değişkenleri ata */
