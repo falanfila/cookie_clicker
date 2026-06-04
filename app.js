@@ -1,4 +1,5 @@
 var x = 0;
+let formatX = x.toLocaleString('en-US')
 var z = "Baker Apprentice";
 var y = localStorage.getItem('oldY')
 let cost1 = 100
@@ -13,6 +14,8 @@ const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI
 const intervalId = setInterval(() => {
   x += y
   document.getElementById("demo").innerHTML = x
+  formatX = x.toLocaleString('en-US')
+  document.getElementById("demo").innerHTML = formatX
   rutbeKontrol();
   localStorage.setItem("cookieScore", x);
 }, 1000)
@@ -20,6 +23,8 @@ const intervalId = setInterval(() => {
 uploadcps()
 x = Number(localStorage.getItem("cookieScore")) || 0;
 document.getElementById("demo").innerHTML = x;
+formatX = x.toLocaleString('en-US')
+document.getElementById("demo").innerHTML = formatX
 
 function buy1() {
   if (x >= cost1){
@@ -27,6 +32,8 @@ function buy1() {
     uploadY(1)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -38,6 +45,8 @@ function buy100() {
     uploadY(100)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -49,6 +58,8 @@ function buy400() {
     uploadY(400)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -60,6 +71,8 @@ function buy800() {
     uploadY(800)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -71,6 +84,8 @@ function buy16000() {
     uploadY(16000)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -82,6 +97,8 @@ function buy32000() {
     uploadY(32000)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -93,6 +110,8 @@ function buy64000() {
     uploadY(64000)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
@@ -104,6 +123,8 @@ function buy128000() {
     uploadY(128000)
     uploadcps()
     document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
   } else {
         alert("Not enough cookies!");
     }
