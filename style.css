@@ -138,8 +138,8 @@ h1 {
 
 /* Sayfadaki öğelere bu değişkenleri ata */
 body {
-  background-color: var(--arka-plan);
-  color: var(--yazi-rengi);
+  background-color: var(--arka-plan) !important;
+  color: var(--yazi-rengi) !important;
   transition: 0.3s; /* Renk geçişi yumuşak olsun diye */
 }
 
