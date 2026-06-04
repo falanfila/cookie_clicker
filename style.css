@@ -155,8 +155,8 @@ body {
 
 .myDiv {
     position: relative;
-    left: 20px;
-    right: 20px;
+    text-align: center;
+    margin: 5px;
     border: 5px outset #173cd1;
     background-color: var(--kutu-rengi);
     transition: 0.3s;
