@@ -5,12 +5,14 @@ h1 {
 .leaderboard-none {
     border: none;
     background-color: var(--arka-plan);
+    transition: 0.3s;
 }
 
 .darkmode-button {
     background-color: var(--background-color) !important;
     color: var(--color) !important;
     border-color: var(--border-color) !important;
+    transition: 0.3s;
 }
 
 .buyment {
@@ -154,6 +156,7 @@ body {
 .myDiv {
   border: 5px outset #173cd1;
   background-color: var(--kutu-rengi);
+  transition: 0.3s;
   text-align: center;
 }
 
@@ -177,6 +180,7 @@ body {
     text-align: center;
     align-items: center;
     transition: transform 0.1s ease-out; 
+    transition: 0.3s;
     transform: scale(1);
 
 }
