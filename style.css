@@ -109,6 +109,7 @@ h1 {
     border: 2px solid #357ABD;
     border-radius: 5px;
     background-color: #4A90E2;
+    transition: 0.3s;
 }
 
 :root {
@@ -235,6 +236,7 @@ body {
     justify-content: center; /* Yatayda ortalar */
     gap: 20px;
     margin-top: 20px;
+    transition: 0.3s;
 }
 
 .all-buttons-container {
@@ -243,5 +245,6 @@ body {
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    margin: 20px 0;          
+    margin: 20px 0;    
+    transition: 0.3s;
 }
