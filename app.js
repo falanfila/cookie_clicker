@@ -13,7 +13,6 @@ const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI
 
 const intervalId = setInterval(() => {
   x += y
-  document.getElementById("demo").innerHTML = x
   formatX = x.toLocaleString('en-US')
   document.getElementById("demo").innerHTML = formatX
   rutbeKontrol();
@@ -22,7 +21,6 @@ const intervalId = setInterval(() => {
 
 uploadcps()
 x = Number(localStorage.getItem("cookieScore")) || 0;
-document.getElementById("demo").innerHTML = x;
 formatX = x.toLocaleString('en-US')
 document.getElementById("demo").innerHTML = formatX
 
@@ -31,7 +29,6 @@ function buy1() {
     x -= cost1
     uploadY(1)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -44,7 +41,6 @@ function buy100() {
     x -= 1000
     uploadY(100)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -57,7 +53,6 @@ function buy400() {
     x -= 10000
     uploadY(400)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -70,7 +65,6 @@ function buy800() {
     x -= 100000
     uploadY(800)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -83,7 +77,6 @@ function buy16000() {
     x -= 1000000
     uploadY(16000)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -96,7 +89,6 @@ function buy32000() {
     x -= 10000000
     uploadY(32000)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -109,7 +101,6 @@ function buy64000() {
     x -= 100000000
     uploadY(64000)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -122,7 +113,6 @@ function buy128000() {
     x -= 1000000000
     uploadY(128000)
     uploadcps()
-    document.getElementById("demo").innerHTML = x;
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
   } else {
@@ -212,7 +202,8 @@ async function saveScoreGlobal(nameToRemove = null) {
 function d() { // Normal Cookie
     x += 1;
   sound.play()
-    document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
 
@@ -225,7 +216,8 @@ document.getElementById("randBtn").onclick = function () { // Fortune Cookie
     var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
   sound.play()
-    document.getElementById("demo").innerHTML = x;
+    formatX = x.toLocaleString('en-US')
+    document.getElementById("demo").innerHTML = formatX
     localStorage.setItem("cookieScore", x);
     rutbeKontrol();
     saveScoreGlobal();
