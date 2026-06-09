@@ -105,6 +105,27 @@
                 <li><a href="https://atlas-yurdakurban.com/feedback">Feedback & Contact Me</a></li>
             </ul>
         </div>
+        <form id="subscribe-form">
+          <input type="email" id="sub-email" placeholder="Mail adresin" required />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="sub-msg" style="display:none"></p>
+        
+        <script>
+        document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('sub-email').value;
+          const msg = document.getElementById('sub-msg');
+        
+          const res = await fetch('/api/subscribe', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+          });
+        
+          msg.style.display = 'block';
+          msg.textContent = res.ok ? '✓ Subscribed' : 'An error occured, please try again.';
+        });
+        </script>
 
     </div>
     
