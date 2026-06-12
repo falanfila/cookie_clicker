@@ -17,6 +17,7 @@ const intervalId = setInterval(() => {
   document.getElementById("demo").innerHTML = formatX
   rutbeKontrol();
   localStorage.setItem("cookieScore", x);
+  saveScoreGlobal();
 }, 1000)
 
 uploadcps()
