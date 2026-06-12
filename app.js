@@ -74,8 +74,8 @@ function buy800() {
 }
 
 function buy16000() {
-  if (x >= 1000000){
-    x -= 1000000
+  if (x >= 600000){
+    x -= 600000
     uploadY(16000)
     uploadcps()
     formatX = x.toLocaleString('en-US')
