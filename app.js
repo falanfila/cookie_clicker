@@ -1,3 +1,4 @@
+//-------VARIABLES-------
 var x = 0;
 let formatX = x.toLocaleString('en-US')
 var z = "Baker Apprentice";
@@ -8,6 +9,7 @@ let sound = document.getElementById("clickSound");
 
 y = y ? Number(y) : 0;
 
+//-----UPSTASH TOKEN AND URL (DON'T LOOK)-------
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
 
@@ -24,6 +26,7 @@ uploadcps()
 x = Number(localStorage.getItem("cookieScore")) || 0;
 formatX = x.toLocaleString('en-US')
 document.getElementById("demo").innerHTML = formatX
+saveScoreGlobal();
 
 function buy1() {
   if (x >= cost1){
@@ -32,6 +35,7 @@ function buy1() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -44,6 +48,7 @@ function buy100() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -56,6 +61,7 @@ function buy400() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -68,6 +74,7 @@ function buy800() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -80,6 +87,7 @@ function buy16000() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -92,6 +100,7 @@ function buy32000() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -104,6 +113,7 @@ function buy64000() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
@@ -116,6 +126,7 @@ function buy128000() {
     uploadcps()
     formatX = x.toLocaleString('en-US')
     document.getElementById("demo").innerHTML = formatX
+    saveScoreGlobal();
   } else {
         alert("Not enough cookies!");
     }
