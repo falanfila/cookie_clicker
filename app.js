@@ -1,150 +1,114 @@
-//-------VARIABLES-------
-var x = 0;
-let formatX = x.toLocaleString('en-US')
+// ------- VARIABLES -------
+var x = 0; // Kurabiye sayısı
+var y = 0; // CPS (Saniyede gelen kurabiye)
 var z = "Baker Apprentice";
-var y = localStorage.getItem('oldY')
-let cost1 = 100
+let formatX = x.toLocaleString('en-US');
+let cost1 = 100;
 let playerName = localStorage.getItem("playerName");
 let sound = document.getElementById("clickSound");
 
-y = y ? Number(y) : 0;
-
-//-----UPSTASH TOKEN AND URL (DON'T LOOK)-------
+// ----- UPSTASH TOKEN AND URL -------
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
 const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI2MjI";
 
-//----SUPABASE STUFF----
+// ---- SUPABASE CONFIG ----
 const SUPABASE_URL = "https://zceiodqcfxfnxjsldbep.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_3Ki5-y5uL8pY0s--_FE43A_ifD5J8Pl";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const intervalId = setInterval(() => {
-  x += y
-  formatX = x.toLocaleString('en-US')
-  document.getElementById("demo").innerHTML = formatX
-  rutbeKontrol();
-  localStorage.setItem("cookieScore", x);
-  saveScoreGlobal();
-}, 1000)
+// Oyunun başında ismi kontrol et ve Supabase'den verileri yükle
+async function initGame() {
+    if (!playerName) {
+        playerName = prompt("Welcome! What is your name for the leaderboard?");
+        if (!playerName) playerName = "Anonymous Baker";
+        localStorage.setItem("playerName", playerName);
+    }
 
-uploadcps()
-x = Number(localStorage.getItem("cookieScore")) || 0;
-formatX = x.toLocaleString('en-US')
-document.getElementById("demo").innerHTML = formatX
-saveScoreGlobal();
+    // Supabase'den bu oyuncunun daha önceki kaydını çekiyoruz
+    await loadGameFromSupabase();
 
-function buy1() {
-  if (x >= cost1){
-    x -= cost1
-    uploadY(1)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
+    // Veriler yüklendikten sonra UI güncelle ve döngüyü başlat
+    updateUI();
+    
+    // Her saniye kurabiye ekleyen döngü
+    setInterval(() => {
+        x += y;
+        updateUI();
+        rutbeKontrol();
+        // Her saniye hem ilerlemeyi hem de liderlik tablosunu kaydet
+        saveGameToSupabase();
+        saveScoreGlobal();
+    }, 1000);
+}
+
+// UI Güncelleme Fonksiyonu (Tekrar eden kodları engellemek için)
+function updateUI() {
+    formatX = x.toLocaleString('en-US');
+    document.getElementById("demo").innerHTML = formatX;
+    document.getElementById("cps").innerHTML = y;
+}
+
+// ---- SUPABASE VERİ KAYDETME VE YÜKLEME ----
+
+async function saveGameToSupabase() {
+    if (!playerName) return;
+
+    // upsert komutu: Eğer bu isimde kayıt varsa günceller, yoksa yeni satır açar
+    const { error } = await supabaseClient
+        .from('cookie_saves')
+        .upsert({ 
+            player_name: playerName, 
+            cookies: parseInt(x), 
+            cps: y 
+        });
+
+    if (error) console.error("Supabase kaydetme hatası:", error);
+}
+
+async function loadGameFromSupabase() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('cookie_saves')
+            .select('*')
+            .eq('player_name', playerName)
+            .single();
+
+        if (data) {
+            x = data.cookies || 0;
+            y = data.cps || 0;
+            console.log("Veriler Supabase'den başarıyla yüklendi!");
+        } else {
+            console.log("Yeni oyuncu, Supabase'de kayıt bulunamadı.");
+        }
+    } catch (err) {
+        console.error("Supabase yükleme hatası:", err);
+    }
+}
+
+// ---- SATIN ALMA FONKSİYONLARI ----
+
+function buyItem(cost, cpsIncrease) {
+    if (x >= cost) {
+        x -= cost;
+        y += cpsIncrease;
+        updateUI();
+        saveGameToSupabase();
+        saveScoreGlobal();
+    } else {
         alert("Not enough cookies!");
     }
 }
 
-function buy100() {
-  if (x >= 1000){
-    x -= 1000
-    uploadY(100)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
+// Eski uzun fonksiyonlar yerine yukarıdaki tek bir fonksiyonu çağırıyoruz:
+function buy1()      { buyItem(cost1, 1); }
+function buy100()    { buyItem(1000, 100); }
+function buy400()    { buyItem(10000, 400); }
+function buy800()    { buyItem(100000, 800); }
+function buy16000()  { buyItem(600000, 16000); }
+function buy32000()  { buyItem(10000000, 32000); }
+function buy64000()  { buyItem(100000000, 64000); }
+function buy128000() { buyItem(1000000000, 128000); }
 
-function buy400() {
-  if (x >= 10000){
-    x -= 10000
-    uploadY(400)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function buy800() {
-  if (x >= 100000){
-    x -= 100000
-    uploadY(800)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function buy16000() {
-  if (x >= 600000){
-    x -= 600000
-    uploadY(16000)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function buy32000() {
-  if (x >= 10000000){
-    x -= 10000000
-    uploadY(32000)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function buy64000() {
-  if (x >= 100000000){
-    x -= 100000000
-    uploadY(64000)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function buy128000() {
-  if (x >= 1000000000){
-    x -= 1000000000
-    uploadY(128000)
-    uploadcps()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    saveScoreGlobal();
-  } else {
-        alert("Not enough cookies!");
-    }
-}
-
-function uploadY(newY) {
-    y += newY;
-    localStorage.setItem('oldY', y);
-}
-
-function uploadcps() {
-  document.getElementById("cps").innerHTML = y
-}
 
 function rutbeKontrol() {
     if (x >= 0 && x < 700) z = "Baker Apprentice";
@@ -157,33 +121,24 @@ function rutbeKontrol() {
     
     document.getElementById("degree").innerHTML = z;
 }
-rutbeKontrol();
-
-if (!playerName) {
-    playerName = prompt("Welcome! What is your name for the leaderboard?");
-    if (!playerName) playerName = "Anonymous Baker";
-    localStorage.setItem("playerName", playerName);
-}
 
 function cu() {
     let oldName = localStorage.getItem("playerName");
-    
     let newName = prompt("Hello again! Let's change that username!");
     
     if (newName && newName !== oldName) {
-
         localStorage.setItem("playerName", newName);
         playerName = newName;
-        
         saveScoreGlobal(oldName); 
+        saveGameToSupabase(); // Yeni isimle Supabase'e de kaydet
         alert("Username changed to " + newName + "!");
     }
 }
 
+// ---- REDIS UPSTASH LEADERBOARD ----
 async function saveScoreGlobal(nameToRemove = null) {
-    const currentName = localStorage.getItem("playerName") || "Anonymous Baker";
+    const currentName = playerName || "Anonymous Baker";
     const score = parseInt(x);
-
     const url = REDIS_URL;
     const token = REDIS_TOKEN;
 
@@ -199,9 +154,7 @@ async function saveScoreGlobal(nameToRemove = null) {
         }
         
         data = data.filter(item => item.name !== currentName);
-        
         data.push({ name: currentName, score: score });
-        
         data.sort((a, b) => b.score - a.score);
         data = data.slice(0, 10);
 
@@ -216,15 +169,14 @@ async function saveScoreGlobal(nameToRemove = null) {
     }
 }
 
-function d() { // Normal Cookie
+function d() { // Normal Tıklama
     x += 1;
-  sound.play()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    localStorage.setItem("cookieScore", x);
+    if (sound) sound.play();
+    updateUI();
     rutbeKontrol();
 
     if (x % 10 === 0) {
+        saveGameToSupabase();
         saveScoreGlobal();
     }
 }
@@ -232,25 +184,25 @@ function d() { // Normal Cookie
 document.getElementById("randBtn").onclick = function () { // Fortune Cookie
     var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
-  sound.play()
-    formatX = x.toLocaleString('en-US')
-    document.getElementById("demo").innerHTML = formatX
-    localStorage.setItem("cookieScore", x);
+    if (sound) sound.play();
+    updateUI();
     rutbeKontrol();
+    saveGameToSupabase();
     saveScoreGlobal();
 };
 
 function p() { // Reset
     if(confirm("Do you want to reset everything?")) {
         x = 0;
-        document.getElementById("demo").innerHTML = x;
-        localStorage.setItem("cookieScore", x);
+        y = 0;
+        updateUI();
         rutbeKontrol();
+        saveGameToSupabase();
         saveScoreGlobal();
     }
 }
 
-function u() { // User Manual
+function u() { // Kullanım Kılavuzu
     alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
 }
 
@@ -266,5 +218,9 @@ function temayiDegistir() { // Dark Mode
 }
 
 window.onbeforeunload = function() {
+    saveGameToSupabase();
     saveScoreGlobal();
 };
+
+// HER ŞEYİ BAŞLATAN TETİKLEYİCİ
+initGame();
