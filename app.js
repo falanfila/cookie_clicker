@@ -16,6 +16,7 @@ const REDIS_TOKEN = "Ac2OAAIncDI0ZGVkODYxN2RkOGI0NmUyYTY0MGJlNGZlNjc0ZGUwN3AyNTI
 //----SUPABASE STUFF----
 const SUPABASE_URL = "https://zceiodqcfxfnxjsldbep.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_3Ki5-y5uL8pY0s--_FE43A_ifD5J8Pl";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const intervalId = setInterval(() => {
   x += y
