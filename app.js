@@ -73,23 +73,28 @@ document.getElementById("btnLogin").onclick = async () => {
 // YENİ: LOGOUT (ÇIKIŞ YAPMA) FONKSİYONU
 document.getElementById("btnLogout").onclick = async () => {
     if(confirm("Çıkış yapmak istediğine emin misin?")) {
-        await supabaseClient.auth.signOut(); // Supabase oturumunu kapatır
-        
-        // Oyun verilerini ve değişkenleri sıfırla
-        userId = null;
-        playerName = "Anonymous Baker";
-        x = 0;
-        y = 0;
-        updateUI();
-        rutbeKontrol();
-        
-        // Giriş ekranını geri getir
-        document.getElementById("authContainer").style.display = "flex";
-        
-        // Giriş formundaki eski yazıları temizle
-        document.getElementById("authUsername").value = "";
-        document.getElementById("authPassword").value = "";
-        document.getElementById("authError").innerText = "";
+        try {
+            await supabaseClient.auth.signOut(); // Supabase oturumunu kapat
+            
+            // Oyun verilerini sıfırla
+            x = 0;
+            y = 0;
+            userId = null;
+            playerName = "Anonymous Baker";
+            updateUI();
+            rutbeKontrol();
+            
+            // Elementin varlığını kontrol ederek aç
+            const authContainer = document.getElementById("authContainer");
+            if (authContainer) {
+                authContainer.style.display = "flex";
+            } else {
+                console.error("HATA: HTML içinde 'authContainer' bulunamadı! ID'yi kontrol et.");
+                alert("Giriş penceresi (authContainer) bulunamadı. HTML kodunu kontrol etmelisin.");
+            }
+        } catch (err) {
+            console.error("Çıkış yapılırken bir hata oluştu:", err);
+        }
     }
 };
 
