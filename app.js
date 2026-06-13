@@ -19,7 +19,7 @@ const SUPABASE_URL = "https://zceiodqcfxfnxjsldbep.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_3Ki5-y5uL8pY0s--_FE43A_ifD5J8Pl";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---- GİRİŞ VE KAYIT HAKLARI (AUTH BUTTONS) ----
+// ---- GİRİŞ VE KAYIT OLMA OLAYLARI (AUTH BUTTONS) ----
 
 document.getElementById("btnRegister").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
@@ -34,7 +34,7 @@ document.getElementById("btnRegister").onclick = async () => {
     const { data, error } = await supabaseClient.auth.signUp({
         email: fakeEmail,
         password: password,
-        options: { data: { display_name: username } } // Kullanıcı adını da içeri saklıyoruz
+        options: { data: { display_name: username } } // Kullanıcı adını içeri saklıyoruz
     });
 
     if (error) {
@@ -66,14 +66,14 @@ document.getElementById("btnLogin").onclick = async () => {
         userId = data.user.id;
         playerName = data.user.user_metadata.display_name || username;
         
-        // İsmi ekranda göstermek istersen (HTML'de element varsa):
         if(document.getElementById("degree")) document.getElementById("degree").innerHTML = playerName;
 
         initGame();
     }
 };
 
-// Oyunun başlangıç fonksiyonu
+// ---- OYUN BAŞLANGIÇ VE UI FONKSİYONLARI ----
+
 async function initGame() {
     // Giriş yapan kullanıcının verilerini Supabase'den çek
     await loadGameFromSupabase();
@@ -95,16 +95,15 @@ function updateUI() {
     document.getElementById("cps").innerHTML = y;
 }
 
-// ---- SUPABASE DATA MANAGEMENT ----
+// ---- SUPABASE VERİ YÖNETİMİ ----
 
 async function saveGameToSupabase() {
     if (!userId) return;
 
-    // Artık 'id' sütununa user_id'yi kaydediyoruz
     const { error } = await supabaseClient
         .from('cookie_saves')
         .upsert({ 
-            id: userId, // Supabase tablonun anahtarı (Primary Key) bu olmalı
+            id: userId, 
             player_name: playerName,
             cookies: parseInt(x), 
             cps: y 
@@ -132,7 +131,8 @@ async function loadGameFromSupabase() {
     }
 }
 
-// ---- SHOP FUNCTIONS ----
+// ---- MAĞAZA (SHOP) FONKSİYONLARI ----
+
 function buyItem(cost, cpsIncrease) {
     if (x >= cost) {
         x -= cost;
@@ -163,12 +163,12 @@ function rutbeKontrol() {
     else if (x >= 10000 && x < 20000) z = "Cookie Emperor";
     else if (x >= 20000) z = "Cookie God";
     
-    // UI'da rütbe alanı varsa güncelle
     let degreeEl = document.getElementById("degree");
     if(degreeEl) degreeEl.innerHTML = z;
 }
 
-// ---- REDIS UPSTASH LEADERBOARD ----
+// ---- REDIS UPSTASH SKOR TABLOSU ----
+
 async function saveScoreGlobal(nameToRemove = null) {
     if (!playerName) return;
     const score = parseInt(x);
@@ -201,7 +201,9 @@ async function saveScoreGlobal(nameToRemove = null) {
     }
 }
 
-function d() { // Normal Click
+// ---- OYUN İÇİ AKSİYONLAR VE BUTONLAR ----
+
+function d() { // Normal Tıklama
     x += 1;
     if (sound) sound.play();
     updateUI();
@@ -222,7 +224,7 @@ document.getElementById("randBtn").onclick = function () { // Fortune Cookie
     saveScoreGlobal();
 };
 
-function p() { // Reset
+function p() { // Sıfırlama (Reset)
     if(confirm("Do you want to reset everything?")) {
         x = 0;
         y = 0;
@@ -233,11 +235,13 @@ function p() { // Reset
     }
 }
 
-function u() { // Manual
+// Kullanım Kılavuzu
+function u() { 
     alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
 }
 
-function temayiDegistir() { // Dark Mode
+// Tema Değiştirici (Dark Mode)
+function temayiDegistir() { 
     const body = document.body;
     const buton = document.getElementById("temaButon");
     body.classList.toggle("dark-mode");
@@ -248,7 +252,35 @@ function temayiDegistir() { // Dark Mode
     }
 }
 
+// Sekme Kapanırken Kaydetme
 window.onbeforeunload = function() {
     saveGameToSupabase();
     saveScoreGlobal();
 };
+
+// ---- OTOMATİK OTURUM KONTROLÜ VE BAŞLATICI ----
+
+async function checkActiveSession() {
+    // Sayfa açıldığı an Supabase'e "Zaten giriş yapmış biri var mı?" diye soruyoruz
+    const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+    if (user && !error) {
+        // Eğer giriş yapmış kullanıcı varsa, giriş ekranını gizle
+        document.getElementById("authContainer").style.display = "none";
+        
+        // Kullanıcı bilgilerini değişkenlere aktar
+        userId = user.id;
+        playerName = user.user_metadata.display_name || user.email.split('@')[0];
+        
+        if(document.getElementById("degree")) document.getElementById("degree").innerHTML = playerName;
+        
+        // Oyunu ve saniyelik döngüyü başlat
+        initGame();
+    } else {
+        // Aktif oturum yoksa hiçbir şey yapma, giriş ekranı ekranda kalsın
+        console.log("Aktif oturum yok, lütfen giriş yapın veya kaydolun.");
+    }
+}
+
+// HER ŞEYİ BAŞLATAN ANA TETİKLEYİCİ
+checkActiveSession();
