@@ -70,27 +70,24 @@ document.getElementById("btnLogin").onclick = async () => {
     }
 };
 
-// YENİ: LOGOUT (ÇIKIŞ YAPMA) FONKSİYONU
+// YENİ DÜZENLENEN LOGOUT: ARTIK SKORLARI ASLA SIFIRLAMIYOR!
 document.getElementById("btnLogout").onclick = async () => {
     if(confirm("Çıkış yapmak istediğine emin misin?")) {
         try {
-            await supabaseClient.auth.signOut(); // Supabase oturumunu kapat
+            // 1. Önce arkadaki otomatik kaydetme döngüsünü durduruyoruz (Buluta 0 yazmasın diye)
+            if(gameInterval) clearInterval(gameInterval);
             
-            // Oyun verilerini sıfırla
-            x = 0;
-            y = 0;
+            // 2. Supabase oturumunu kapatıyoruz
+            await supabaseClient.auth.signOut(); 
+            
+            // 3. Kullanıcı kimlik bilgilerini temizliyoruz (Ama x ve y kurabiyelerine dokunmuyoruz!)
             userId = null;
             playerName = "Anonymous Baker";
-            updateUI();
-            rutbeKontrol();
             
-            // Elementin varlığını kontrol ederek aç
+            // 4. Giriş ekranını güvenli bir şekilde geri getiriyoruz
             const authContainer = document.getElementById("authContainer");
             if (authContainer) {
                 authContainer.style.display = "flex";
-            } else {
-                console.error("HATA: HTML içinde 'authContainer' bulunamadı! ID'yi kontrol et.");
-                alert("Giriş penceresi (authContainer) bulunamadı. HTML kodunu kontrol etmelisin.");
             }
         } catch (err) {
             console.error("Çıkış yapılırken bir hata oluştu:", err);
@@ -100,10 +97,10 @@ document.getElementById("btnLogout").onclick = async () => {
 
 // ---- OYUN BAŞLANGIÇ VE UI FONKSİYONLARI ----
 
-let gameInterval = null; // Döngüyü kontrol etmek için değişken
+let gameInterval = null; 
 
 async function initGame() {
-    // Eğer eski bir döngü varsa önce onu temizle (üst üste binmesinler)
+    // Üst üste binme olmasın diye eski döngü varsa temizle
     if(gameInterval) clearInterval(gameInterval);
 
     await loadGameFromSupabase();
@@ -111,7 +108,9 @@ async function initGame() {
     
     // Her saniye çalışan ana döngü
     gameInterval = setInterval(() => {
-        if (!userId) return; // Güvenlik önlemi: Eğer kullanıcı yoksa asla işlem yapma
+        // Güvenlik Duvarı: Geçerli bir kullanıcı yoksa veya ID hatalıysa hiçbir şey yapma
+        if (!userId || userId.length !== 36) return; 
+        
         x += y;
         updateUI();
         rutbeKontrol();
@@ -129,7 +128,8 @@ function updateUI() {
 // ---- SUPABASE VERİ YÖNETİMİ ----
 
 async function saveGameToSupabase() {
-    if (!userId || userId === "atlas") return; // Kritik Hata Engelleyici!
+    // KESİN ÇÖZÜM: ID boşsa veya 36 karakterli standart UUID formatında değilse durdur!
+    if (!userId || userId.length !== 36) return; 
 
     const { error } = await supabaseClient
         .from('cookie_saves')
@@ -144,7 +144,8 @@ async function saveGameToSupabase() {
 }
 
 async function loadGameFromSupabase() {
-    if (!userId || userId === "atlas") return; // Kritik Hata Engelleyici!
+    // KESİN ÇÖZÜM: ID boşsa veya 36 karakterli standart UUID formatında değilse durdur!
+    if (!userId || userId.length !== 36) return; 
     try {
         const { data, error } = await supabaseClient
             .from('cookie_saves')
@@ -201,7 +202,7 @@ function rutbeKontrol() {
 // ---- REDIS UPSTASH SKOR TABLOSU ----
 
 async function saveScoreGlobal(nameToRemove = null) {
-    if (!playerName || !userId || userId === "atlas") return;
+    if (!playerName || !userId || userId.length !== 36) return;
     const score = parseInt(x);
     const url = REDIS_URL;
     const token = REDIS_TOKEN;
@@ -300,11 +301,10 @@ async function checkActiveSession() {
         
         initGame();
     } else {
-        // Eğer girişli kimse yoksa ekranı temiz tut ve formu göster
         document.getElementById("authContainer").style.display = "flex";
         console.log("Aktif oturum yok, lütfen giriş yapın.");
     }
 }
 
-// HER ŞEYİ BAŞLATAN TEK TETİKLEYİCİ
+// BÜTÜN SİSTEMİ ÇALIŞTIRAN ANA TETİKLEYİCİ
 checkActiveSession();
