@@ -72,7 +72,7 @@ document.getElementById("btnLogin").onclick = async () => {
 
 // YENİ DÜZENLENEN LOGOUT: ARTIK SKORLARI ASLA SIFIRLAMIYOR!
 document.getElementById("btnLogout").onclick = async () => {
-    if(confirm("Çıkış yapmak istediğine emin misin?")) {
+    if(confirm("Are you sure?")) {
         try {
             // 1. Önce arkadaki otomatik kaydetme döngüsünü durduruyoruz (Buluta 0 yazmasın diye)
             if(gameInterval) clearInterval(gameInterval);
@@ -302,7 +302,7 @@ async function checkActiveSession() {
         initGame();
     } else {
         document.getElementById("authContainer").style.display = "flex";
-        console.log("Aktif oturum yok, lütfen giriş yapın.");
+        console.log("Please sign in");
     }
 }
 
