@@ -177,14 +177,14 @@ function buyItem(cost, cpsIncrease) {
     }
 }
 
-function buy1()      { buyItem(cost1, 1); }
-function buy100()    { buyItem(1000, 100); }
-function buy400()    { buyItem(10000, 400); }
-function buy800()    { buyItem(100000, 800); }
-function buy16000()  { buyItem(600000, 16000); }
-function buy32000()  { buyItem(10000000, 32000); }
-function buy64000()  { buyItem(100000000, 64000); }
-function buy128000() { buyItem(1000000000, 128000); }
+function buy1()      { buyItem(cost1, 10); }
+function buy100()    { buyItem(1000, 200); }
+function buy400()    { buyItem(10000, 600); }
+function buy800()    { buyItem(100000, 1000); }
+function buy16000()  { buyItem(600000, 20000); }
+function buy32000()  { buyItem(1000000, 45000); }
+function buy64000()  { buyItem(10000000, 75000); }
+function buy128000() { buyItem(100000000, 150000); }
 
 function rutbeKontrol() {
     if (x >= 0 && x < 700) z = "Baker Apprentice";
