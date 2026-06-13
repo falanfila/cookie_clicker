@@ -19,7 +19,7 @@ const SUPABASE_URL = "https://zceiodqcfxfnxjsldbep.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_3Ki5-y5uL8pY0s--_FE43A_ifD5J8Pl";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---- GİRİŞ VE KAYIT OLMA OLAYLARI (AUTH BUTTONS) ----
+// ---- GİRİŞ, KAYIT VE ÇIKIŞ OLAYLARI (AUTH) ----
 
 document.getElementById("btnRegister").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
@@ -28,13 +28,12 @@ document.getElementById("btnRegister").onclick = async () => {
 
     if(!username || !password) return errorEl.innerText = "Fill all fields!";
 
-    // Sahte e-posta hilesi
     const fakeEmail = `${username.toLowerCase()}@kurabiye.com`;
 
     const { data, error } = await supabaseClient.auth.signUp({
         email: fakeEmail,
         password: password,
-        options: { data: { display_name: username } } // Kullanıcı adını içeri saklıyoruz
+        options: { data: { display_name: username } }
     });
 
     if (error) {
@@ -61,7 +60,6 @@ document.getElementById("btnLogin").onclick = async () => {
     if (error) {
         errorEl.innerText = error.message;
     } else {
-        // Giriş başarılı! Pencereyi kapat ve oyunu başlat
         document.getElementById("authContainer").style.display = "none";
         userId = data.user.id;
         playerName = data.user.user_metadata.display_name || username;
@@ -72,15 +70,43 @@ document.getElementById("btnLogin").onclick = async () => {
     }
 };
 
+// YENİ: LOGOUT (ÇIKIŞ YAPMA) FONKSİYONU
+document.getElementById("btnLogout").onclick = async () => {
+    if(confirm("Çıkış yapmak istediğine emin misin?")) {
+        await supabaseClient.auth.signOut(); // Supabase oturumunu kapatır
+        
+        // Oyun verilerini ve değişkenleri sıfırla
+        userId = null;
+        playerName = "Anonymous Baker";
+        x = 0;
+        y = 0;
+        updateUI();
+        rutbeKontrol();
+        
+        // Giriş ekranını geri getir
+        document.getElementById("authContainer").style.display = "flex";
+        
+        // Giriş formundaki eski yazıları temizle
+        document.getElementById("authUsername").value = "";
+        document.getElementById("authPassword").value = "";
+        document.getElementById("authError").innerText = "";
+    }
+};
+
 // ---- OYUN BAŞLANGIÇ VE UI FONKSİYONLARI ----
 
+let gameInterval = null; // Döngüyü kontrol etmek için değişken
+
 async function initGame() {
-    // Giriş yapan kullanıcının verilerini Supabase'den çek
+    // Eğer eski bir döngü varsa önce onu temizle (üst üste binmesinler)
+    if(gameInterval) clearInterval(gameInterval);
+
     await loadGameFromSupabase();
     updateUI();
     
     // Her saniye çalışan ana döngü
-    setInterval(() => {
+    gameInterval = setInterval(() => {
+        if (!userId) return; // Güvenlik önlemi: Eğer kullanıcı yoksa asla işlem yapma
         x += y;
         updateUI();
         rutbeKontrol();
@@ -98,7 +124,7 @@ function updateUI() {
 // ---- SUPABASE VERİ YÖNETİMİ ----
 
 async function saveGameToSupabase() {
-    if (!userId) return;
+    if (!userId || userId === "atlas") return; // Kritik Hata Engelleyici!
 
     const { error } = await supabaseClient
         .from('cookie_saves')
@@ -113,7 +139,7 @@ async function saveGameToSupabase() {
 }
 
 async function loadGameFromSupabase() {
-    if (!userId) return;
+    if (!userId || userId === "atlas") return; // Kritik Hata Engelleyici!
     try {
         const { data, error } = await supabaseClient
             .from('cookie_saves')
@@ -170,7 +196,7 @@ function rutbeKontrol() {
 // ---- REDIS UPSTASH SKOR TABLOSU ----
 
 async function saveScoreGlobal(nameToRemove = null) {
-    if (!playerName) return;
+    if (!playerName || !userId || userId === "atlas") return;
     const score = parseInt(x);
     const url = REDIS_URL;
     const token = REDIS_TOKEN;
@@ -203,7 +229,7 @@ async function saveScoreGlobal(nameToRemove = null) {
 
 // ---- OYUN İÇİ AKSİYONLAR VE BUTONLAR ----
 
-function d() { // Normal Tıklama
+function d() { 
     x += 1;
     if (sound) sound.play();
     updateUI();
@@ -214,7 +240,7 @@ function d() { // Normal Tıklama
     }
 }
 
-document.getElementById("randBtn").onclick = function () { // Fortune Cookie
+document.getElementById("randBtn").onclick = function () { 
     var randomIncrease = Math.floor(Math.random() * 101) + (-50);
     x += randomIncrease;
     if (sound) sound.play();
@@ -224,7 +250,7 @@ document.getElementById("randBtn").onclick = function () { // Fortune Cookie
     saveScoreGlobal();
 };
 
-function p() { // Sıfırlama (Reset)
+function p() { 
     if(confirm("Do you want to reset everything?")) {
         x = 0;
         y = 0;
@@ -235,12 +261,10 @@ function p() { // Sıfırlama (Reset)
     }
 }
 
-// Kullanım Kılavuzu
 function u() { 
     alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
 }
 
-// Tema Değiştirici (Dark Mode)
 function temayiDegistir() { 
     const body = document.body;
     const buton = document.getElementById("temaButon");
@@ -252,7 +276,6 @@ function temayiDegistir() {
     }
 }
 
-// Sekme Kapanırken Kaydetme
 window.onbeforeunload = function() {
     saveGameToSupabase();
     saveScoreGlobal();
@@ -261,26 +284,22 @@ window.onbeforeunload = function() {
 // ---- OTOMATİK OTURUM KONTROLÜ VE BAŞLATICI ----
 
 async function checkActiveSession() {
-    // Sayfa açıldığı an Supabase'e "Zaten giriş yapmış biri var mı?" diye soruyoruz
     const { data: { user }, error } = await supabaseClient.auth.getUser();
 
     if (user && !error) {
-        // Eğer giriş yapmış kullanıcı varsa, giriş ekranını gizle
         document.getElementById("authContainer").style.display = "none";
-        
-        // Kullanıcı bilgilerini değişkenlere aktar
         userId = user.id;
         playerName = user.user_metadata.display_name || user.email.split('@')[0];
         
         if(document.getElementById("degree")) document.getElementById("degree").innerHTML = playerName;
         
-        // Oyunu ve saniyelik döngüyü başlat
         initGame();
     } else {
-        // Aktif oturum yoksa hiçbir şey yapma, giriş ekranı ekranda kalsın
-        console.log("Aktif oturum yok, lütfen giriş yapın veya kaydolun.");
+        // Eğer girişli kimse yoksa ekranı temiz tut ve formu göster
+        document.getElementById("authContainer").style.display = "flex";
+        console.log("Aktif oturum yok, lütfen giriş yapın.");
     }
 }
 
-// HER ŞEYİ BAŞLATAN ANA TETİKLEYİCİ
+// HER ŞEYİ BAŞLATAN TEK TETİKLEYİCİ
 checkActiveSession();
