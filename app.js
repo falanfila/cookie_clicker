@@ -268,7 +268,7 @@ function p() {
 }
 
 function u() { 
-    alert("The chocolate cookie gives you 1. The fortune cookie gives you 1-50 random. Good luck!");
+    alert("The chocolate cookie gives you 1. The fortune cookie gives you between -50 and 50 random. Good luck!");
 }
 
 function temayiDegistir() { 
