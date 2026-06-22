@@ -77,6 +77,10 @@ h1 {
     transition: color 0.3s ease; 
 }
 
+.input-background {
+    background-color: #181a1b;
+}
+
 /* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
 .footer-column a:hover {
     color: #007bff; /* Sadece maviye döner */
