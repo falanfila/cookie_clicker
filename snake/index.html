@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <style>
+    body {
+      background-color: #222;
+      margin: 0;
+      overflow: hidden; /* Hides scrollbars for true full screen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #gameCanvas {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let gridSize;
+  let tileCount;
+
+  // Snake initial position and velocity
+  let snake;
+  let dx;
+  let dy;
+
+  // Food position
+  let foodX;
+  let foodY;
+
+  let score = 0;
+  let highScore = localStorage.getItem("snakeHighScore") || 0;
+  let gameInterval;
+  let isGameOver = false;
+  const baseSpeed = 100; // Game speed in milliseconds
+
+  // Adjust game area based on window size
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Grid calculation based on the screen size
+    gridSize = Math.floor(Math.min(canvas.width, canvas.height) / 20);
+    tileCount = Math.floor(canvas.width / gridSize);
+
+    if (!isGameOver) {
+      resetGame();
+    }
+  }
+
+  window.addEventListener('resize', resize);
+
+  // Start the game loop
+  function startGameLoop() {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(updateGame, baseSpeed);
+  }
+
+  document.addEventListener("keydown", handleKeyPress);
+
+  // Initial setup
+  resize();
+  resetGame();
+
+  function resetGame() {
+    snake = [{x: Math.floor(tileCount / 2), y: Math.floor(canvas.height / gridSize / 2)}];
+    dx = 0;
+    dy = 0;
+    score = 0;
+    isGameOver = false;
+    generateFood();
+    startGameLoop();
+  }
+
+  function updateGame() {
+    if (isGameOver) return;
+
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+
+    // Wall collision detection
+    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= Math.floor(canvas.height / gridSize)) {
+      gameOver();
+      return;
+    }
+
+    // Self collision detection
+    for (let i = 0; i < snake.length; i++) {
+      if (head.x === snake[i].x && head.y === snake[i].y && (dx !== 0 || dy !== 0)) {
+        gameOver();
+        return;
+      }
+    }
+
+    snake.unshift(head);
+
+    // Food collision detection
+    if (head.x === foodX && head.y === foodY) {
+      score += 10;
+      // Update high score instantly if beaten
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("snakeHighScore", highScore);
+      }
+      generateFood();
+    } else {
+      snake.pop();
+    }
+
+    clearCanvas();
+    drawFood();
+    drawSnake();
+    drawScore();
+  }
+
+  function clearCanvas() {
+    ctx.fillStyle = "#111";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function drawSnake() {
+    snake.forEach((part, index) => {
+      if (index === 0) ctx.fillStyle = "#388E3C"; // Darker green for head
+      else ctx.fillStyle = "#4CAF50";             // Normal green for body
+
+      ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 2, gridSize - 2);
+    });
+  }
+
+  function drawFood() {
+    ctx.fillStyle = "#FF5722"; // Red food
+    ctx.fillRect(foodX * gridSize, foodY * gridSize, gridSize - 2, gridSize - 2);
+  }
+
+  function generateFood() {
+    foodX = Math.floor(Math.random() * tileCount);
+    foodY = Math.floor(Math.random() * Math.floor(canvas.height / gridSize));
+
+    // Prevent food from spawning on top of the snake
+    snake.forEach(part => {
+      if (part.x === foodX && part.y === foodY) {
+        generateFood();
+      }
+    });
+  }
+
+  function handleKeyPress(event) {
+    const keyPressed = event.keyCode;
+    const LEFT = 37;
+    const UP = 38;
+    const RIGHT = 39;
+    const DOWN = 40;
+    const SPACE = 32;
+
+    // Restart game with Spacebar if game is over
+    if (keyPressed === SPACE && isGameOver) {
+      resetGame();
+      return;
+    }
+
+    const goingUp = dy === -1;
+    const goingDown = dy === 1;
+    const goingRight = dx === 1;
+    const goingLeft = dx === -1;
+
+    if (keyPressed === LEFT && !goingRight) { dx = -1; dy = 0; }
+    if (keyPressed === UP && !goingDown) { dx = 0; dy = -1; }
+    if (keyPressed === RIGHT && !goingLeft) { dx = 1; dy = 0; }
+    if (keyPressed === DOWN && !goingUp) { dx = 0; dy = 1; }
+  }
+
+  function drawScore() {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "right";
+    ctx.fillText("Score: " + score + "  |  High Score: " + highScore, canvas.width - 20, 30);
+  }
+
+  function gameOver() {
+    isGameOver = true;
+    clearInterval(gameInterval);
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+
+    ctx.font = "40px Arial";
+    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 10);
+
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.fillText("Press SPACE to Restart", canvas.width / 2, canvas.height / 2 + 30);
+  }
+</script>
+</body>
+</html>
