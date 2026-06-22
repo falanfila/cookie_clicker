@@ -77,8 +77,10 @@ h1 {
     transition: color 0.3s ease; 
 }
 
-.input-background {
-    background-color: #181a1b;
+.input-colors {
+    background-color: #181a1b; 
+    border-color: #787063; 
+    color: #787063;
 }
 
 /* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
