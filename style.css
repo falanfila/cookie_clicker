@@ -78,9 +78,9 @@ h1 {
 }
 
 .input-colors {
-    background-color: #181a1b; 
-    border-color: #787063; 
-    color: #787063;
+    background-color: #181a1b !important; 
+    border-color: #787063 !important; 
+    color: #787063 !important;
 }
 
 /* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
