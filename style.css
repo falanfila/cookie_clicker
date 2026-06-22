@@ -120,10 +120,10 @@ h1 {
 
 /* Karanlık Mod Renkleri */
 .dark-mode {
-  --arka-plan: #1a1a1a;
+  --arka-plan: #181a1b;
   --yazi-rengi: #f0f0f0;
   --cookie-buton-bg: #1a1a1a;
-  --kutu-rengi: #333333;
+  --kutu-rengi: #313537;
 }
 
 .dark-button {
