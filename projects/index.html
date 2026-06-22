@@ -18,4 +18,63 @@
   <a href="https://atlas-yurdakurban.com/snake" target="_blank" style="margin-top: 30px;" class="btn tbackground">
     <img src="projects/snake.png" class="align-middle" width="416" height="156" style="border-radius: 10px;">
   </a>
+  <footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-column special-size another-special-size">
+            <a href="https://atlas-yurdakurban.com" alt="Main Page" title="Main Page">
+                <img src="logo.png">
+            </a>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="https://atlas-yurdakurban.com">Home</a></li>
+                <li><a href="https://atlas-yurdakurban.com/aboutme">About</a></li>
+                <li><a href="https://atlas-yurdakurban.com/projects">Games & Stuff</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Connect</h3>
+            <ul>
+                <li><a href="https://github.com/falanfila/cookie_clicker" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li><a href="https://atlas-yurdakurban.com/feedback">Feedback & Contact Me</a></li>
+            </ul>
+        </div>
+        <form id="subscribe-form">
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" id="sub-email" placeholder="Your mail adress" required />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+        </form>
+        <p id="sub-msg" style="display:none"></p><br>
+        <p>Subscribe for getting the latest updates instantly.</p>
+        
+        <script>
+        document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('sub-email').value;
+          const msg = document.getElementById('sub-msg');
+        
+          const res = await fetch('/api/subscribe', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+          });
+        
+          msg.style.display = 'block';
+          msg.textContent = res.ok ? '  Success!' : '  An error occured, please try again.';
+          setTimeout(function() {
+              msg.style.display = 'none'; // Yazıyı tekrar gizle
+          }, 3000); // 3000 milisaniye = 3 saniye
+        });
+        
+        </script>
+
+    </div>
+    
+    <div class="footer-bottom">
+        <p></p>
+    </div>
+</footer>
 </body>
