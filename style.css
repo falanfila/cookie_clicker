@@ -119,7 +119,7 @@ h1 {
 }
 
 .input-colors {
-    background-color: #181a1b !important; 
+    background-color: var(--background-color);
     border-color: #787063 !important; 
     color: #7d7d7d !important;
 }
