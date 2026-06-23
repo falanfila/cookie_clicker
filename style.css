@@ -2,6 +2,47 @@ h1 {
     color: red;
 }
 
+/* Özelleştirilmiş Header Arka Planı (Koyu Modern Gri/Siyah) */
+.bg-custom {
+  background-color: #11141a !important;
+  padding: 15px 0;
+  transition: all 0.3s ease;
+}
+
+/* Logo Alanı Stili */
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Linklerin Normal Hali */
+.navbar-dark .navbar-nav .nav-link {
+  color: #a0aec0;
+  font-weight: 500;
+  padding: 8px 16px !important;
+  transition: color 0.3s ease;
+}
+
+/* Linklerin Üzerine Gelindiğinde (Hover) ve Aktifken */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #ffffff;
+}
+
+/* İletişim Butonunun Özelleştirilmesi */
+.btn-contact {
+  border-radius: 20px;
+  padding: 6px 20px !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-contact:hover {
+  transform: translateY(-2px); /* Hafif yukarı zıplama efekti */
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
 .leaderboard-none {
     border: none;
     background-color: var(--arka-plan);
