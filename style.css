@@ -124,6 +124,10 @@ h1 {
     color: #7d7d7d !important;
 }
 
+input::placeholder {
+    color: #5a5a59;
+}
+
 /* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
 .footer-column a:hover {
     color: #007bff; /* Sadece maviye döner */
