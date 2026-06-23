@@ -124,8 +124,9 @@ h1 {
     color: #7d7d7d !important;
 }
 
-input::placeholder {
+.input-colors::placeholder {
     color: #5a5a59;
+    opacity: 1;
 }
 
 /* GELİŞTİRİLMİŞ HOVER: Sadece renk değişir, yazı kımıldamaz */
