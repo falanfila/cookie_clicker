@@ -124,7 +124,7 @@ h1 {
     color: #7d7d7d !important;
 }
 
-.input-colors::placeholder {
+input::placeholder {
     color: #5a5a59;
     opacity: 1;
 }
