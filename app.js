@@ -70,6 +70,10 @@ document.getElementById("btnLogin").onclick = async () => {
     }
 };
 
+if (darkMode === "true") {
+    temayiDegistir();
+}
+
 // YENİ DÜZENLENEN LOGOUT: ARTIK SKORLARI ASLA SIFIRLAMIYOR!
 document.getElementById("btnLogout").onclick = async () => {
     if(confirm("Are you sure?")) {
@@ -94,6 +98,8 @@ document.getElementById("btnLogout").onclick = async () => {
         }
     }
 };
+
+
 
 // ---- OYUN BAŞLANGIÇ VE UI FONKSİYONLARI ----
 
@@ -277,8 +283,10 @@ function temayiDegistir() {
     body.classList.toggle("dark-mode");
     if (body.classList.contains("dark-mode")) {
         buton.innerHTML = "☀️ Light Mode";
+        var darkMode = localStorage.setItem("darkMode", "true");
     } else {
         buton.innerHTML = "🌙 Dark Mode";
+        var darkMode = localStorage.setItem("darkMode", "false");
     }
 }
 
