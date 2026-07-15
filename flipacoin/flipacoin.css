@@ -1,0 +1,99 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e24;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    color: #fff;
+}
+
+.game-container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* 3D Para Alanı */
+.coin {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    margin: 40px auto;
+    transform-style: preserve-3d;
+    transition: transform 3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+/* Paranın Ön ve Arka Yüzünün Ortak Özellikleri */
+.side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+    backface-visibility: hidden; /* Arkada kalan yüzün görünmesini engeller */
+    border: 6px solid #ffd700;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Yazı Yüzü (Ön) */
+.front {
+    background: linear-gradient(135deg, #ffe066, #f5b041);
+    color: #7d3c00;
+}
+
+/* Tura Yüzü (Arka) */
+.back {
+    background: linear-gradient(135deg, #f5b041, #ffe066);
+    color: #7d3c00;
+    transform: rotateY(180deg); /* Arka yüzü ters çeviriyoruz */
+}
+
+/* Buton Tasarımı */
+button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: #ff4747;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Sonuç Metni */
+#result {
+    margin-top: 25px;
+    font-size: 22px;
+    height: 30px; /* Sayfanın oynamasını engellemek için sabit yükseklik */
+    font-weight: bold;
+    color: #ffd700;
+}
