@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flip a coin</title>
+    <link rel="stylesheet" href="geminiFlipACoin.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Heads or Tails?</h1>
+
+        <p>Heads: <span id="heads">0</span></p>
+        <p>Tails: <span id="tails">0</span></p>
+
+        <div class="coin" id="coin">
+            <div class="side back">
+                <img alt="heads" width="150px" height="150px" src="heads1.png">
+            </div>
+            <div class="side front">
+                <img alt="tails" width="150px" height="150px" src="tails1.png">
+            </div>
+        </div>
+
+        <button id="flip-btn">Flip!</button>
+        <p id="result"></p>
+    </div>
+    <script src="geminiFlipACoin.js" defer></script>
+</body>
+</html>
