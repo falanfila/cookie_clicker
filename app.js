@@ -21,52 +21,76 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ---- GİRİŞ, KAYIT VE ÇIKIŞ OLAYLARI (AUTH) ----
 
+// ---- REGISTER (YENİ HESAP) ----
 document.getElementById("btnRegister").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
-    const password = document.getElementById("authPassword").value;
     const errorEl = document.getElementById("authError");
 
-    if(!username || !password) return errorEl.innerText = "Fill all fields!";
+    if(!username) return errorEl.innerText = "Please enter a username!";
+    errorEl.innerText = "Checking username...";
 
-    const fakeEmail = `${username.toLowerCase()}@kurabiye.com`;
+    try {
+        let { data } = await supabaseClient
+            .from('cookie_saves')
+            .select('*')
+            .eq('player_name', username)
+            .maybeSingle();
 
-    const { data, error } = await supabaseClient.auth.signUp({
-        email: fakeEmail,
-        password: password,
-        options: { data: { display_name: username } }
-    });
+        if (data) return errorEl.innerText = "Username already taken! Try Login.";
 
-    if (error) {
-        errorEl.innerText = error.message;
-    } else {
-        alert("Account created! Now you can Login.");
+        const { data: newPlayer, error: insertError } = await supabaseClient
+            .from('cookie_saves')
+            .insert([{ player_name: username, cookies: 0, cps: 0 }])
+            .select()
+            .single();
+
+        if (insertError) throw insertError;
+
+        userId = newPlayer.id;
+        playerName = newPlayer.player_name;
+        x = 0;
+        y = 0;
+
+        localStorage.setItem("cookie_username", playerName);
+        document.getElementById("authContainer").style.display = "none";
+        initGame();
+
+    } catch (err) {
+        console.error("Register error:", err);
+        errorEl.innerText = "Could not create account!";
     }
 };
 
+// ---- LOGIN (MEVCUT HESAP) ----
 document.getElementById("btnLogin").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
-    const password = document.getElementById("authPassword").value;
     const errorEl = document.getElementById("authError");
 
-    if(!username || !password) return errorEl.innerText = "Fill all fields!";
+    if(!username) return errorEl.innerText = "Please enter a username!";
+    errorEl.innerText = "Loading...";
 
-    const fakeEmail = `${username.toLowerCase()}@kurabiye.com`;
+    try {
+        let { data, error } = await supabaseClient
+            .from('cookie_saves')
+            .select('*')
+            .eq('player_name', username)
+            .maybeSingle();
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: fakeEmail,
-        password: password
-    });
+        if (error) throw error;
+        if (!data) return errorEl.innerText = "User not found! Please Register first.";
 
-    if (error) {
-        errorEl.innerText = error.message;
-    } else {
+        userId = data.id;
+        playerName = data.player_name;
+        x = data.cookies || 0;
+        y = data.cps || 0;
+
+        localStorage.setItem("cookie_username", playerName);
         document.getElementById("authContainer").style.display = "none";
-        userId = data.user.id;
-        playerName = data.user.user_metadata.display_name || username;
-        
-        if(document.getElementById("degree")) document.getElementById("degree").innerHTML = playerName;
-
         initGame();
+
+    } catch (err) {
+        console.error("Login error:", err);
+        errorEl.innerText = "Could not connect to database!";
     }
 };
 
