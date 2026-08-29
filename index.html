@@ -15,19 +15,20 @@
 </head>
 <body>
 <!-- GİRİŞ VE KAYIT EKRANI -->
-<div id="authContainer" class="row justify-content-center my-4">
-    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-        <div class="card shadow-sm text-center p-4">
-            <h4 class="mb-3">Welcome</h4>
-            <div class="mb-3">
-                <input type="text" id="authUsername" class="form-control" placeholder="Enter Username">
-            </div>
-            <div class="d-grid gap-2">
-                <button id="btnLogin" class="btn btn-success fw-bold">Login</button>
-                <button id="btnRegister" class="btn btn-outline-primary fw-bold">Register</button>
-            </div>
-            <div id="authError" class="text-danger mt-2 small fw-bold"></div>
+<!-- TAM EKRAN ORTALANMIŞ GİRİŞ / KAYIT OVERLAY'İ -->
+<div id="authContainer" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-75" style="z-index: 9999;">
+    <div class="card shadow-lg text-center p-4 border-0" style="width: 90%; max-width: 360px;">
+        <h3 class="fw-bold mb-1">Log In</h3>
+        <div class="mb-3">
+            <input type="text" id="authUsername" class="form-control text-center fs-5" placeholder="Username">
         </div>
+        
+        <div class="d-grid gap-2">
+            <button id="btnLogin" class="btn btn-success btn-lg fw-bold">Login</button>
+            <button id="btnRegister" class="btn btn-outline-primary fw-bold">Register</button>
+        </div>
+        
+        <div id="authError" class="text-danger mt-3 small fw-bold"></div>
     </div>
 </div>
     <header>
