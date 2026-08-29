@@ -28,6 +28,7 @@ document.getElementById("btnRegister").onclick = async () => {
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Checking username...";
+    document.getElementById("username").innerHTML = username
 
     try {
         let { data } = await supabaseClient
