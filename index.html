@@ -14,19 +14,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div id="authContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999;">
-        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; color: black; max-width: 300px; width: 100%;">
-            <h2 id="authTitle">Cookie Clicker Login</h2>
-            <input type="text" id="authUsername" placeholder="Username" style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;"><br>
-            <a href="help">Forgot Username?</a><br>
-            <input type="password" id="authPassword" placeholder="Password" style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;"><br>
-            <a href="help">Forgot Password?</a><br>
-            
-            <button id="btnLogin" style="padding: 10px 20px; margin: 5px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Login</button>
-            <button id="btnRegister" style="padding: 10px 20px; margin: 5px; background: #008CBA; color: white; border: none; border-radius: 5px; cursor: pointer;">Register</button>
-            <p id="authError" style="color: red; font-size: 14px; margin-top: 10px;"></p>
+<!-- GİRİŞ VE KAYIT EKRANI -->
+<div id="authContainer" class="row justify-content-center my-4">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card shadow-sm text-center p-4">
+            <h4 class="mb-3">Welcome</h4>
+            <div class="mb-3">
+                <input type="text" id="authUsername" class="form-control" placeholder="Enter Username">
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnLogin" class="btn btn-success fw-bold">Login</button>
+                <button id="btnRegister" class="btn btn-outline-primary fw-bold">Register</button>
+            </div>
+            <div id="authError" class="text-danger mt-2 small fw-bold"></div>
         </div>
     </div>
+</div>
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-custom shadow-sm fixed-top" style="border-bottom: 2px solid #007bff; box-shadow: 0px -5px 15px rgba(0, 123, 255, 0.3);">
         <div class="container">
