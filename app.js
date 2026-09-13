@@ -243,13 +243,14 @@ function buy64000()  { buyItem(10000000, 75000); }
 function buy128000() { buyItem(100000000, 150000); }
 
 function rutbeKontrol() {
-    if (x >= 0 && x < 700) z = "Baker Apprentice";
-    else if (x >= 700 && x < 1500) z = "Baker";
-    else if (x >= 1500 && x < 3000) z = "Cookie Fabricator";
-    else if (x >= 3000 && x < 5000) z = "Master Chef";
-    else if (x >= 5000 && x < 10000) z = "Cookie Rich";
-    else if (x >= 10000 && x < 20000) z = "Cookie Emperor";
-    else if (x >= 20000) z = "Cookie God";
+    if (x >= 0 && x < 150000) z = "Baker Apprentice";
+    else if (x >= 150000 && x < 800000) z = "Baker";
+    else if (x >= 800000 && x < 2000000) z = "Cookie Fabricator";
+    else if (x >= 2000000 && x < 5000000) z = "Master Chef";
+    else if (x >= 5000000 && x < 10000000) z = "Cookie Rich";
+    else if (x >= 10000000 && x < 25000000) z = "Cookie Emperor";
+    else if (x >= 25000000 && x < 100000000) z = "Cookieworld Ruler";
+    else if (x >= 100000000) z = "Cookie God";
 }
 
 // ---- REDIS UPSTASH SKOR TABLOSU (MİSAFİR ENGELİ EKLENDİ) ----
