@@ -25,6 +25,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 document.getElementById("btnRegister").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
     const errorEl = document.getElementById("authError");
+    guest = false;
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Checking username...";
@@ -66,6 +67,7 @@ document.getElementById("btnRegister").onclick = async () => {
 document.getElementById("btnLogin").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
     const errorEl = document.getElementById("authError");
+    guest = false;
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Loading...";
@@ -95,6 +97,10 @@ document.getElementById("btnLogin").onclick = async () => {
         errorEl.innerText = "Could not connect to database!";
     }
 };
+
+document.getElementById("btnGuest").onclick = async () => {
+    let guest = true;
+}
 
 // YENİ DÜZENLENEN LOGOUT: ARTIK SKORLARI ASLA SIFIRLAMIYOR!
 document.getElementById("btnLogout").onclick = async () => {
