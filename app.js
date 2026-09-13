@@ -6,9 +6,10 @@ let formatX = x.toLocaleString('en-US');
 let cost1 = 100;
 let sound = document.getElementById("clickSound");
 
-// Giriş yapan kullanıcının ID'si ve adı burada tutulacak
+// Giriş yapan kullanıcının ID'si, adı ve misafir durumu
 let userId = null;
 let playerName = "Anonymous Baker";
+let isGuest = false;
 
 // ----- UPSTASH TOKEN AND URL -------
 const REDIS_URL = "https://pleased-stinkbug-52622.upstash.io";
@@ -19,17 +20,15 @@ const SUPABASE_URL = "https://zceiodqcfxfnxjsldbep.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_3Ki5-y5uL8pY0s--_FE43A_ifD5J8Pl";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---- GİRİŞ, KAYIT VE ÇIKIŞ OLAYLARI (AUTH) ----
+// ---- AUTH BUTONLARI (REGISTER, LOGIN, GUEST, LOGOUT) ----
 
-// ---- REGISTER (YENİ HESAP) ----
+// REGISTER (YENİ HESAP)
 document.getElementById("btnRegister").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
     const errorEl = document.getElementById("authError");
-    guest = false;
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Checking username...";
-    document.getElementById("username").innerHTML = username
 
     try {
         let { data } = await supabaseClient
@@ -48,12 +47,14 @@ document.getElementById("btnRegister").onclick = async () => {
 
         if (insertError) throw insertError;
 
+        isGuest = false;
         userId = newPlayer.id;
         playerName = newPlayer.player_name;
         x = 0;
         y = 0;
 
         localStorage.setItem("cookie_username", playerName);
+        localStorage.removeItem("is_guest"); // Misafir modunu temizle
         document.getElementById("authContainer").style.display = "none";
         initGame();
 
@@ -63,15 +64,13 @@ document.getElementById("btnRegister").onclick = async () => {
     }
 };
 
-// ---- LOGIN (MEVCUT HESAP) ----
+// LOGIN (MEVCUT HESAP)
 document.getElementById("btnLogin").onclick = async () => {
     const username = document.getElementById("authUsername").value.trim();
     const errorEl = document.getElementById("authError");
-    guest = false;
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Loading...";
-    document.getElementById("username").innerHTML = username
 
     try {
         let { data, error } = await supabaseClient
@@ -83,12 +82,14 @@ document.getElementById("btnLogin").onclick = async () => {
         if (error) throw error;
         if (!data) return errorEl.innerText = "User not found! Please Register first.";
 
+        isGuest = false;
         userId = data.id;
         playerName = data.player_name;
         x = data.cookies || 0;
         y = data.cps || 0;
 
         localStorage.setItem("cookie_username", playerName);
+        localStorage.removeItem("is_guest"); // Misafir modunu temizle
         document.getElementById("authContainer").style.display = "none";
         initGame();
 
@@ -98,58 +99,69 @@ document.getElementById("btnLogin").onclick = async () => {
     }
 };
 
-document.getElementById("btnGuest").onclick = async () => {
-    let guest = true;
-}
+// GUEST (MİSAFİR GİRİŞİ - localStorage İLE KAYIT)
+document.getElementById("btnGuest").onclick = () => {
+    isGuest = true;
+    userId = null;
 
-// YENİ DÜZENLENEN LOGOUT: ARTIK SKORLARI ASLA SIFIRLAMIYOR!
+    // Daha önceden tanımlanmış misafir adı varsa onu kullan, yoksa yenisini oluştur
+    let savedGuestName = localStorage.getItem("guest_player_name");
+    if (!savedGuestName) {
+        savedGuestName = "Anonymous Baker";
+        localStorage.setItem("guest_player_name", savedGuestName);
+    }
+    playerName = savedGuestName;
+
+    // LocalStorage üzerindeki misafir kurabiyelerini yükle
+    x = parseInt(localStorage.getItem("guest_cookies")) || 0;
+    y = parseInt(localStorage.getItem("guest_cps")) || 0;
+
+    localStorage.setItem("is_guest", "true");
+    localStorage.removeItem("cookie_username"); // Kayıtlı kullanıcı oturumunu temizle
+
+    document.getElementById("authContainer").style.display = "none";
+    initGame();
+};
+
+// LOGOUT (ÇIKIŞ YAPMA)
 document.getElementById("btnLogout").onclick = async () => {
-    if(confirm("Are you sure?")) {
-        try {
-            // 1. Önce arkadaki otomatik kaydetme döngüsünü durduruyoruz (Buluta 0 yazmasın diye)
-            if(gameInterval) clearInterval(gameInterval);
-            
-            // 2. Supabase oturumunu kapatıyoruz
-            await supabaseClient.auth.signOut(); 
-            
-            // 3. Kullanıcı kimlik bilgilerini temizliyoruz (Ama x ve y kurabiyelerine dokunmuyoruz!)
-            userId = null;
-            playerName = "Anonymous Baker";
-            
-            // 4. Giriş ekranını güvenli bir şekilde geri getiriyoruz
-            const authContainer = document.getElementById("authContainer");
-            if (authContainer) {
-                authContainer.style.display = "flex";
-            }
-        } catch (err) {
-            console.error("Çıkış yapılırken bir hata oluştu:", err);
+    if(confirm("Are you sure you want to logout?")) {
+        if(gameInterval) clearInterval(gameInterval);
+        
+        // Giriş durumlarını temizle
+        localStorage.removeItem("cookie_username");
+        localStorage.removeItem("is_guest");
+        
+        isGuest = false;
+        userId = null;
+        playerName = "Anonymous Baker";
+        
+        const authContainer = document.getElementById("authContainer");
+        if (authContainer) {
+            authContainer.style.display = "flex";
         }
     }
 };
-
-
 
 // ---- OYUN BAŞLANGIÇ VE UI FONKSİYONLARI ----
 
 let gameInterval = null; 
 
 async function initGame() {
-    // Üst üste binme olmasın diye eski döngü varsa temizle
     if(gameInterval) clearInterval(gameInterval);
 
-    await loadGameFromSupabase();
+    if (!isGuest) {
+        await loadGameFromSupabase();
+    }
+    
     updateUI();
     
     // Her saniye çalışan ana döngü
     gameInterval = setInterval(() => {
-        // Güvenlik Duvarı: Geçerli bir kullanıcı yoksa veya ID hatalıysa hiçbir şey yapma
-        if (!userId || userId.length !== 36) return; 
-        
         x += y;
         updateUI();
         rutbeKontrol();
-        saveGameToSupabase();
-        saveScoreGlobal();
+        saveGame();
     }, 1000);
 }
 
@@ -157,13 +169,25 @@ function updateUI() {
     formatX = x.toLocaleString('en-US');
     document.getElementById("demo").innerHTML = formatX;
     document.getElementById("cps").innerHTML = y;
+    if(document.getElementById("degree")) document.getElementById("degree").innerHTML = z;
 }
 
-// ---- SUPABASE VERİ YÖNETİMİ ----
+// ---- VERİ KAYDETME (SUPABASE VEYA LOCALSTORAGE) ----
+
+function saveGame() {
+    if (isGuest) {
+        // Misafir verilerini localStorage'a kaydet
+        localStorage.setItem("guest_cookies", parseInt(x));
+        localStorage.setItem("guest_cps", parseInt(y));
+    } else {
+        // Kayıtlı kullanıcı verilerini Supabase ve Redis'e kaydet
+        saveGameToSupabase();
+        saveScoreGlobal();
+    }
+}
 
 async function saveGameToSupabase() {
-    // KESİN ÇÖZÜM: ID boşsa veya 36 karakterli standart UUID formatında değilse durdur!
-    if (!userId || userId.length !== 36) return; 
+    if (isGuest || !userId || userId.length !== 36) return; 
 
     const { error } = await supabaseClient
         .from('cookie_saves')
@@ -178,10 +202,9 @@ async function saveGameToSupabase() {
 }
 
 async function loadGameFromSupabase() {
-    // KESİN ÇÖZÜM: ID boşsa veya 36 karakterli standart UUID formatında değilse durdur!
-    if (!userId || userId.length !== 36) return; 
+    if (isGuest || !userId || userId.length !== 36) return; 
     try {
-        const { data, error } = await supabaseClient
+        const { data } = await supabaseClient
             .from('cookie_saves')
             .select('*')
             .eq('id', userId)
@@ -204,8 +227,7 @@ function buyItem(cost, cpsIncrease) {
         x -= cost;
         y += cpsIncrease;
         updateUI();
-        saveGameToSupabase();
-        saveScoreGlobal();
+        saveGame();
     } else {
         alert("Not enough cookies!");
     }
@@ -228,14 +250,17 @@ function rutbeKontrol() {
     else if (x >= 5000 && x < 10000) z = "Cookie Rich";
     else if (x >= 10000 && x < 20000) z = "Cookie Emperor";
     else if (x >= 20000) z = "Cookie God";
-    
-    let degreeEl = document.getElementById("degree");
-    if(degreeEl) degreeEl.innerHTML = z;
 }
 
-// ---- REDIS UPSTASH SKOR TABLOSU ----
+// ---- REDIS UPSTASH SKOR TABLOSU (MİSAFİR ENGELİ EKLENDİ) ----
 
 async function saveScoreGlobal(nameToRemove = null) {
+    // Misafir hesabıysa liderlik tablosuna kesinlikle erişim sağlama
+    if (isGuest) {
+        alert("Guests cannot participate in the global leaderboard! Please create an account.");
+        return;
+    }
+
     if (!playerName || !userId || userId.length !== 36) return;
     const score = parseInt(x);
     const url = REDIS_URL;
@@ -275,8 +300,7 @@ function d() {
     updateUI();
     rutbeKontrol();
     if (x % 10 === 0) {
-        saveGameToSupabase();
-        saveScoreGlobal();
+        saveGame();
     }
 }
 
@@ -286,8 +310,7 @@ document.getElementById("randBtn").onclick = function () {
     if (sound) sound.play();
     updateUI();
     rutbeKontrol();
-    saveGameToSupabase();
-    saveScoreGlobal();
+    saveGame();
 };
 
 function p() { 
@@ -296,8 +319,7 @@ function p() {
         y = 0;
         updateUI();
         rutbeKontrol();
-        saveGameToSupabase();
-        saveScoreGlobal();
+        saveGame();
     }
 }
 
@@ -317,28 +339,48 @@ function temayiDegistir() {
 }
 
 window.onbeforeunload = function() {
-    saveGameToSupabase();
-    saveScoreGlobal();
+    saveGame();
 };
 
-// ---- OTOMATİK OTURUM KONTROLÜ VE BAŞLATICI ----
+// ---- OTOMATİK OTURUM KONTROLÜ (SAYFA YENİLENİNCE ÇIKIŞ YAPMAZ) ----
 
 async function checkActiveSession() {
-    const { data: { user }, error } = await supabaseClient.auth.getUser();
+    const savedUsername = localStorage.getItem("cookie_username");
+    const savedGuest = localStorage.getItem("is_guest");
 
-    if (user && !error) {
+    // 1. Kayıtlı kullanıcı oturumu varsa
+    if (savedUsername) {
+        let { data } = await supabaseClient
+            .from('cookie_saves')
+            .select('*')
+            .eq('player_name', savedUsername)
+            .maybeSingle();
+
+        if (data) {
+            isGuest = false;
+            userId = data.id;
+            playerName = data.player_name;
+            
+            document.getElementById("authContainer").style.display = "none";
+            initGame();
+            return;
+        }
+    } 
+    // 2. Misafir oturumu varsa (Sayfa yenilense bile misafir kalır)
+    else if (savedGuest === "true") {
+        isGuest = true;
+        userId = null;
+        playerName = localStorage.getItem("guest_player_name") || "Guest_Player";
+        x = parseInt(localStorage.getItem("guest_cookies")) || 0;
+        y = parseInt(localStorage.getItem("guest_cps")) || 0;
+
         document.getElementById("authContainer").style.display = "none";
-        userId = user.id;
-        playerName = user.user_metadata.display_name || user.email.split('@')[0];
-        
-        if(document.getElementById("degree")) document.getElementById("degree").innerHTML = playerName;
-        
         initGame();
-    } else {
-        document.getElementById("authContainer").style.display = "flex";
-        console.log("Please sign in");
+        return;
     }
+    
+    // Aktif oturum yoksa paneli aç
+    document.getElementById("authContainer").style.display = "flex";
 }
 
-// BÜTÜN SİSTEMİ ÇALIŞTIRAN ANA TETİKLEYİCİ
 checkActiveSession();
