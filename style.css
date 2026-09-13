@@ -192,7 +192,7 @@ h1 {
 
 /* Sayfadaki öğelere bu değişkenleri ata */
 body {
-  background-color: var(--arka-plan) !important;
+  background-image: url("bakery.png") !important;
   color: var(--yazi-rengi) !important;
   transition: 0.3s; /* Renk geçişi yumuşak olsun diye */
 }
