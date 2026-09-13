@@ -69,6 +69,7 @@ document.getElementById("btnLogin").onclick = async () => {
 
     if(!username) return errorEl.innerText = "Please enter a username!";
     errorEl.innerText = "Loading...";
+    document.getElementById("username").innerHTML = username
 
     try {
         let { data, error } = await supabaseClient
